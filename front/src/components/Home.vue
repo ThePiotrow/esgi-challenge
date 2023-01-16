@@ -9,7 +9,7 @@ export default defineComponent({
 
 <template>
     <v-container>
-        Home
+        Homeee
         <v-icon icon="mdi-account"></v-icon>
     </v-container>
 </template>
