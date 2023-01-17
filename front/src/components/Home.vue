@@ -6,8 +6,8 @@ export default defineComponent({
 </script>
 
 <template>
-    <v-container>
-        Homeee
+    <v-container class="bg-secondary">
+        <v-btn>Home</v-btn>
         <v-icon icon="mdi-account"></v-icon>
     </v-container>
 </template>
