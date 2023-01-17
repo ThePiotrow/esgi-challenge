@@ -3,6 +3,7 @@ import Bet from "../views/Bet.vue"
 import Fighter from "../views/Fighter.vue"
 import Sponsorship from "../views/Sponsorship.vue"
 import Event from "../views/Event.vue"
+import Login from "../view/Login.vue"
 
 export default [
     {
@@ -29,5 +30,10 @@ export default [
         path: '/bet',
         component: Bet,
         name: 'bet' 
+    },
+    {
+        path: '/login',
+        component: Login,
+        name: 'login'
     }
 ]

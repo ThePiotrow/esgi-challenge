@@ -1,7 +1,7 @@
 <template>
     <v-app-bar color="primary-darken-1 pr-6">
 
-        <template v-if="isAdmin" v-slot:prepend>
+        <template v-slot:prepend v-if="isAdmin">
             <v-app-bar-nav-icon color="white" @click="emit('toggleNavigationDrawer')"></v-app-bar-nav-icon>
         </template>
 
