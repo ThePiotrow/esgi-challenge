@@ -4,6 +4,8 @@ import Fighter from "../views/Fighter.vue"
 import Sponsorship from "../views/Sponsorship.vue"
 import Event from "../views/Event.vue"
 import Login from "../view/Login.vue"
+import Signup from "../view/Signup.vue"
+import ResetPassword from "../view/ResetPassword.vue"
 
 export default [
     {
@@ -35,5 +37,15 @@ export default [
         path: '/login',
         component: Login,
         name: 'login'
+    },
+    {
+        path: '/signup',
+        component: Signup,
+        name: 'signup'
+    },
+    {
+        path: '/resetpassword',
+        component: ResetPassword,
+        name: 'resetpassword'
     }
 ]
