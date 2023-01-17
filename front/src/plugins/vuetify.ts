@@ -25,6 +25,12 @@ export default createVuetify({
         VBtn: {
             color: 'primary',
             variant: 'flat'
+        },
+        VTextField: {
+            variant: 'outlined'
+        },
+        VMenu: {
+            location: 'bottom'
         }
     },
     theme: {
