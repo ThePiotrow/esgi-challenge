@@ -1,10 +1,27 @@
 import { defineStore } from 'pinia'
-import { user } from '../service/api';
-import { signinInterface, signupInterface } from '../interfaces/payload';
+import { computed, reactive, ref } from 'vue'
+import { userService } from '../service/api';
+import type { signinInterface, signupInterface } from '../interfaces/payload';
+import { userInterface } from '../interfaces/responseAPI';
 
 export const useUserStore = defineStore('user', () => {
 
-    const { _signin, _signup } = user;
+    const { _signin, _signup } = userService;
+
+    const user = reactive<userInterface>({
+        id: '1',
+        email: '',
+        username: 'admin',
+        roles: ['ROLE_USER']
+    })
+
+    const isAdmin = computed(() => {
+        return user.roles.includes('ROLE_ADMIN') && user.roles.length !== 0;
+    });
+
+    const isConnected = computed(() => {
+        return !!user.email;
+    })
 
     async function signin(payload: signinInterface) {
         try {
@@ -21,5 +38,5 @@ export const useUserStore = defineStore('user', () => {
 
         }
     }
-    return { signin }
+    return { signin, signup, isAdmin, isConnected, user }
 });
