@@ -27,10 +27,15 @@ export default createVuetify({
             variant: 'flat'
         },
         VTextField: {
-            variant: 'outlined'
+            variant: 'outlined',
+            density: 'compact'
         },
         VMenu: {
             location: 'bottom'
+        },
+        VSelect: {
+            variant: 'outlined',
+            density: 'compact'
         }
     },
     theme: {

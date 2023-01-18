@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container>
     <Event></Event>
-  </div>
+  </v-container>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
