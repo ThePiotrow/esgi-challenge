@@ -18,21 +18,21 @@
         </v-card-title>
           <v-container>
             <v-form v-model="valid" ref="form">
-              <v-row justify="space-between" align="center">
+              <v-row justify="space-between" class="align-center">
                 <v-col>
-                  <v-text-field v-model="firstname" :rules="[rules.required]" placeholder="Firstname" label="Firstname" />
+                  <v-text-field v-model="fighter.firstname" :rules="[rules.required]" placeholder="Firstname" label="Firstname" />
                 </v-col>
                 <v-col>
-                  <v-text-field v-model="lastname" :rules="[rules.required]" placeholder="Lastname" label="Lastname" />
+                  <v-text-field v-model="fighter.lastname" :rules="[rules.required]" placeholder="Lastname" label="Lastname" />
                 </v-col>
                 <v-col>
-                  <v-text-field v-model="birthday" :rules="[rules.required]" type="date" label="Birthday" />
+                  <v-text-field v-model="fighter.birthdate" :rules="[rules.required]" type="date" label="Birthday" />
                 </v-col>
               </v-row>
-              <v-row align="center">
+              <v-row class="align-center">
                 <v-col>
                     <v-autocomplete 
-                        v-model="nationality" 
+                        v-model="fighter.nationality" 
                         :items="nationalityJson" 
                         solo 
                         :rules="[rules.required]"
@@ -45,19 +45,19 @@
                     />
                 </v-col>
                 <v-col>
-                  <v-slider v-model="height" label="Height (cm)" min="70" max="230" :step="1" color="primary" track-color="secondary" thumb-label="always">
+                  <v-slider v-model="fighter.height" label="Height (cm)" min="70" max="230" :step="1" color="primary" track-color="secondary" thumb-label="always">
                     <template v-slot:thumb-label="{ modelValue }">
                       {{ modelValue }}
                     </template>
                   </v-slider>
                 </v-col>
                 <v-col>
-                  <v-select v-model="gender" :rules="[rules.required]" label="Gender" placeholder="Gender" :items="['Male', 'Female']" color="secondary" />
+                  <v-select v-model="fighter.gender" :rules="[rules.required]" label="Gender" placeholder="Gender" :items="['Male', 'Female']" color="secondary" />
                 </v-col>
               </v-row>
-              <v-row align="center">
+              <v-row class="align-center">
                 <v-col cols="4">
-                    <v-text-field v-model="weight" :rules="[rules.weight]" type="number" max="400" min="52" label="Weight">
+                    <v-text-field v-model.number="fighter.weight" :rules="[rules.weight]" type="number" max="400" min="52" label="Weight">
                         <template v-slot:details>
                             <div v-if="division">Category: <span :style="{ color: division.color }">{{ division.name }}</span></div>
                         </template>
@@ -77,21 +77,26 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, reactive } from 'vue';
 import nationalityJson from '../data/nationality.json';
 import { createToast } from 'mosha-vue-toastify' 
+import { fighterInterface } from '../interfaces/payload';
+
 export default defineComponent({
   setup() {
     const form = ref();
     const dialog = ref<boolean>(false);
     const valid = ref<boolean>(false);
-    const gender = ref<string>('');
-    const firstname = ref<string>('');
-    const lastname = ref<string>('');
-    const birthday = ref<string>('');
-    const height = ref<number>(70);
-    const weight = ref<number>(70);
-    const nationality = ref<string>('');
+
+    const fighter = reactive<fighterInterface>({
+        gender: '',
+        firstname: '',
+        lastname: '',
+        birthdate: '',
+        height: 70,
+        weight: 70,
+        nationality: ''
+    });
 
     const divisionByWeight = [
         {
@@ -168,7 +173,7 @@ export default defineComponent({
 
     const division = computed(() => {
         const closest = divisionByWeight.map(division => division.weight).reduce(function(prev, curr) {
-            return (Math.abs(curr - weight.value) < Math.abs(prev - weight.value) ? curr : prev);
+            return (Math.abs(curr - fighter.weight) < Math.abs(prev - fighter.weight) ? curr : prev);
         });
         return divisionByWeight.find(division => division.weight === closest);
     });
@@ -181,23 +186,15 @@ export default defineComponent({
     const createFighter = () => {
         try {
             if (form.value.validate()) {
-                const payload = {
-                    firstname: firstname.value,
-                    lastname: lastname.value,
-                    height: height.value,
-                    weight: weight.value,
-                    birthday: birthday.value,
-                    nationality: nationality.value,
-                    gender: gender.value
-                }
+                console.log(fighter)
                 // CALL CREATE FIGHTER
             }
-        } catch (error) {
+        } catch (error: any) {
             createToast(error, { position: "bottom-right", type: 'danger' })
         }
     }
 
-    return { dialog, valid, gender, firstname, lastname, birthday, height, nationality, weight, division, nationalityJson, rules, createFighter, form }
+    return { dialog, valid, fighter, division, nationalityJson, rules, createFighter, form }
   }
 });
 </script>
