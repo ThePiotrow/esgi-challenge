@@ -44,10 +44,12 @@
             </template>
         </template>
 
-        <div v-else class="d-flex" style="gap: 0.75rem;">
-            <v-btn color="secondary" variant="flat">signup</v-btn>
-            <v-btn color="white" variant="outlined">signin</v-btn>
-        </div>
+        <template v-else>
+            <div class="d-flex mr-3" style="gap: 0.75rem;">
+                <v-btn color="secondary" variant="flat">signup</v-btn>
+                <v-btn color="white" variant="flat">signin</v-btn>
+            </div>
+        </template>
     </v-app-bar>
 </template>
 <script lang="ts">
@@ -82,6 +84,3 @@ export default defineComponent({
 })
 
 </script>
-<style lang="">
-    
-</style>
