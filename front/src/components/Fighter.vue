@@ -57,7 +57,7 @@
               </v-row>
               <v-row class="align-center">
                 <v-col cols="4">
-                    <v-text-field v-model.number="fighter.weight" :rules="[rules.weight]" type="number" max="400" min="52" label="Weight">
+                    <v-text-field v-model="fighter.weight" :rules="[rules.weight]" type="number" max="400" min="52" label="Weight">
                         <template v-slot:details>
                             <div v-if="division">Category: <span :style="{ color: division.color }">{{ division.name }}</span></div>
                         </template>
@@ -80,7 +80,7 @@
 import { defineComponent, ref, computed, reactive } from 'vue';
 import nationalityJson from '../data/nationality.json';
 import { createToast } from 'mosha-vue-toastify' 
-import { fighterInterface } from '../interfaces/payload';
+import { FighterI } from '../interfaces/payload';
 
 export default defineComponent({
   setup() {
@@ -88,7 +88,7 @@ export default defineComponent({
     const dialog = ref<boolean>(false);
     const valid = ref<boolean>(false);
 
-    const fighter = reactive<fighterInterface>({
+    const fighter = reactive<FighterI>({
         gender: '',
         firstname: '',
         lastname: '',

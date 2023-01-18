@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive } from 'vue'
 import { userService } from '../service/api';
-import type { signinInterface, signupInterface } from '../interfaces/payload';
+import type { SigninI, SignupI } from '../interfaces/payload';
 import { userInterface } from '../interfaces/responseAPI';
 
 export const useUserStore = defineStore('user', () => {
@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    async function signin(payload: signinInterface) {
+    async function signin(payload: SigninI) {
         try {
             const res = await _signin(payload);
         } catch (e) {
@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    async function signup(payload: signupInterface) {
+    async function signup(payload: SignupI) {
         try {
             const res = await _signup(payload);
         } catch (e) {

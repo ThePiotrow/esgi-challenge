@@ -1,10 +1,10 @@
-import { signinInterface, signupInterface } from "../../interfaces/payload";
+import { SigninI, SignupI, TokenI, UserI } from "../../interfaces/payload";
 import { client } from "../index";
 import { clientWithoutAuth } from "../index";
 
 class User {
 
-  async _signin(payload: signinInterface): Promise<any> {
+  async _signin(payload: SigninI): Promise<TokenI> {
     try {
         const uri = '/signin'
         const res = await clientWithoutAuth.post(uri, payload);
@@ -14,7 +14,7 @@ class User {
     }
   } 
 
-  async _signinWithToken(token: string): Promise<any> {
+  async _signinWithToken(token: string): Promise<TokenI> {
       try {
           const uri = '/tokenSignin'
           const res = await clientWithoutAuth.post(uri, { token: token });
@@ -24,7 +24,7 @@ class User {
       }
   } 
 
-  async _signup(payload: signupInterface): Promise<any> {
+  async _signup(payload: SignupI): Promise<void> {
       try {
           const uri = '/signup'
           const res = await clientWithoutAuth.post(uri, payload);
@@ -34,7 +34,7 @@ class User {
       }
   } 
 
-  async _getUser(): Promise<any> {
+  async _getUser(): Promise<UserI> {
       try {
           const uri = '/users/me'
           const res = await client.get(uri);
