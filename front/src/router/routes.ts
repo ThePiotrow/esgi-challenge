@@ -6,6 +6,7 @@ import Event from "../views/Event.vue"
 import Login from "../view/Login.vue"
 import Signup from "../view/Signup.vue"
 import ResetPassword from "../view/ResetPassword.vue"
+import Deposit from "../view/Deposit.vue"
 
 export default [
     {
@@ -47,5 +48,10 @@ export default [
         path: '/resetpassword',
         component: ResetPassword,
         name: 'resetpassword'
-    }
+    },
+    {
+        path: '/deposit',
+        component: Deposit,
+        name: 'deposit'
+    },
 ]
