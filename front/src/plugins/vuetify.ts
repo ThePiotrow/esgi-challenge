@@ -5,7 +5,7 @@ import * as directives from 'vuetify/directives'
 const myCustomLightTheme: ThemeDefinition = {
     dark: false,
     colors: {
-        background: '#F2F2F2',
+        background: '#EAEAEA',
         surface: '#F2F2F2',
         primary: '#FF0035',
         'primary-darken-1': '#CC0029',
@@ -36,6 +36,10 @@ export default createVuetify({
         VSelect: {
             variant: 'outlined',
             density: 'compact'
+        },
+        VCard: {
+            rounded: 'xl',
+            flat: true
         }
     },
     theme: {
