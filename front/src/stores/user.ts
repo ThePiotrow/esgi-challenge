@@ -10,18 +10,26 @@ export const useUserStore = defineStore('user', () => {
 
     const user = reactive<userInterface>({
         id: '1',
-        email: '',
+        email: 'admin@gmail.com',
         username: 'admin',
-        roles: ['ROLE_USER']
+        roles: ['ROLE_ADMIN']
     })
 
     const isAdmin = computed(() => {
-        return user.roles.includes('ROLE_ADMIN') && user.roles.length !== 0;
+        return user.roles.includes('ROLE_ADMIN');
     });
 
     const isConnected = computed(() => {
         return !!user.email;
-    })
+    });
+
+    async function toggleAdmin() {
+        if (user.roles.includes('ROLE_ADMIN')) {
+            user.roles = ['ROLE_USER']
+        } else {
+            user.roles = ['ROLE_ADMIN']
+        }
+    }
 
     async function signin(payload: signinInterface) {
         try {
@@ -38,5 +46,5 @@ export const useUserStore = defineStore('user', () => {
 
         }
     }
-    return { signin, signup, isAdmin, isConnected, user }
+    return { signin, signup, isAdmin, isConnected, user, toggleAdmin }
 });

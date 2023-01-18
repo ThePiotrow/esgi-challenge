@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar color="primary-darken-1 pr-6">
+    <v-app-bar color="primary-darken-1">
 
         <template v-slot:prepend v-if="isAdmin">
             <v-app-bar-nav-icon color="white" @click="emit('toggleNavigationDrawer')"></v-app-bar-nav-icon>
@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
 
         <template v-if="isConnected">
-            
+            <v-btn @click="toggleAdmin" color="secondary" variant="flat">Toggle admin</v-btn>
             <template v-if="isAdmin">
                 
             </template>
@@ -62,6 +62,7 @@ export default defineComponent({
 
         const userStore = useUserStore();
         const { isConnected, isAdmin, user } = storeToRefs(userStore);
+        const { toggleAdmin } = userStore;
 
         const userMenu = [
             {
@@ -76,7 +77,7 @@ export default defineComponent({
             }
         ]
 
-        return { userMenu, router, isAdmin, isConnected, user, emit }
+        return { userMenu, router, isAdmin, isConnected, user, emit, toggleAdmin }
     }
 })
 
