@@ -3,112 +3,92 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Post;
+use App\Entity\Traits\EntityIdTrait;
+use App\Enum\OrderPaymentType;
+use App\Enum\OrderStatusType;
 use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
-#[Post(denormalizationContext: ['groups' => ['order_post']])]
+#[ApiResource]
 class Order
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column()]
-    private ?int $id = null;
+    use EntityIdTrait;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('order_post')]
-    private ?\DateTimeInterface $datetime = null;
+    #[ORM\Column(length: 255)]
+    private ?OrderStatusType $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?OrderPaymentType $payment_type = null;
+
+    #[ORM\Column]
+    private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[Groups('order_post')]
-    private ?Customer $customer = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ticket $ticket = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderDelivery', targetEntity: Detail::class, cascade: ['persist', 'remove'])]
-    #[Groups('order_post')]
-    private Collection $details;
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user_order = null;
 
-    #[ORM\Column(options: ['default' => '0'])]
-    private ?float $total = null;
-
-    public function __construct()
+    public function getStatus(): ?OrderStatusType
     {
-        $this->details = new ArrayCollection();
+        return $this->status;
     }
 
-    public function getId(): ?int
+    public function setStatus(OrderStatusType $status): self
     {
-        return $this->id;
-    }
-
-    public function getDatetime(): ?\DateTimeInterface
-    {
-        return $this->datetime;
-    }
-
-    public function setDatetime(\DateTimeInterface $datetime): self
-    {
-        $this->datetime = $datetime;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getCustomer(): ?Customer
+    public function getPaymentType(): ?OrderPaymentType
     {
-        return $this->customer;
+        return $this->payment_type;
     }
 
-    public function setCustomer(?Customer $customer): self
+    public function setPaymentType(OrderPaymentType $payment_type): self
     {
-        $this->customer = $customer;
+        $this->payment_type = $payment_type;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Detail>
-     */
-    public function getDetails(): Collection
+    public function getQuantity(): ?int
     {
-        return $this->details;
+        return $this->quantity;
     }
 
-    public function addDetail(Detail $detail): self
+    public function setQuantity(int $quantity): self
     {
-        if (!$this->details->contains($detail)) {
-            $this->details[] = $detail;
-            $detail->setOrderDelivery($this);
-        }
+        $this->quantity = $quantity;
 
         return $this;
     }
 
-    public function removeDetail(Detail $detail): self
+    public function getTicket(): ?Ticket
     {
-        if ($this->details->removeElement($detail)) {
-            // set the owning side to null (unless already changed)
-            if ($detail->getOrderDelivery() === $this) {
-                $detail->setOrderDelivery(null);
-            }
-        }
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): self
+    {
+        $this->ticket = $ticket;
 
         return $this;
     }
 
-    public function getTotal(): ?float
+    public function getUserOrder(): ?User
     {
-        return $this->total;
+        return $this->user_order;
     }
 
-    public function setTotal(float $total): self
+    public function setUserOrder(?User $user_order): self
     {
-        $this->total = $total;
+        $this->user_order = $user_order;
 
         return $this;
     }
