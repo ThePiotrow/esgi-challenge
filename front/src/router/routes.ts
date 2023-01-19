@@ -3,55 +3,64 @@ import Bet from "../views/Bet.vue"
 import Fighter from "../views/Fighter.vue"
 import Sponsorship from "../views/Sponsorship.vue"
 import Event from "../views/Event.vue"
-import Login from "../view/Login.vue"
-import Signup from "../view/Signup.vue"
-import ResetPassword from "../view/ResetPassword.vue"
-import Deposit from "../view/Deposit.vue"
+import Login from "../views/Login.vue"
+import Signup from "../views/Signup.vue"
+import ResetPassword from "../views/ResetPassword.vue"
+import Deposit from "../views/Deposit.vue"
 
 export default [
     {
         path: '/',
         component: Home,
         name: 'home',
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/fighters',
         component: Fighter,
-        name: 'fighter' 
+        name: 'fighter',
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/events',
         component: Event,
-        name: 'event' 
+        name: 'event',
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/sponsorship',
         component: Sponsorship,
-        name: 'sponsorship' 
+        name: 'sponsorship',
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/bet',
         component: Bet,
-        name: 'bet' 
+        name: 'bet',
+        meta: { requiresAuth: true, requiresAdmin: false }
     },
     {
         path: '/login',
         component: Login,
-        name: 'login'
+        name: 'login',
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/signup',
         component: Signup,
-        name: 'signup'
+        name: 'signup',
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/resetpassword',
         component: ResetPassword,
-        name: 'resetpassword'
+        name: 'resetpassword',
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/deposit',
         component: Deposit,
-        name: 'deposit'
+        name: 'deposit',
+        meta: { requiresAuth: true, requiresAdmin: false }
     },
 ]

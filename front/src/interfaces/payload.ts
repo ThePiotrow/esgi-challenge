@@ -7,7 +7,6 @@ export interface SignupI {
 	username: string
 	email: string
 	password: string
-	role: Array<string>
 }
 
 export interface UserI {
