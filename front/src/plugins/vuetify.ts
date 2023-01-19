@@ -24,11 +24,12 @@ export default createVuetify({
     defaults: {
         VBtn: {
             color: 'primary',
-            variant: 'flat'
+            variant: 'flat',
+            rounded: 'xl'
         },
         VTextField: {
-            variant: 'outlined',
-            density: 'compact'
+            // variant: 'outlined',
+            // density: 'compact'
         },
         VMenu: {
             location: 'bottom'

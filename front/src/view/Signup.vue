@@ -1,11 +1,11 @@
 <template>
     <v-row no-gutters justify="center">
-        <v-col cols="12" md="6" lg="3">
-            <v-card class="pa-3 mt-12">
+        <v-col cols="10" md="6" lg="4">
+            <v-card class="pa-5 mt-12">
                 <div class="text-center"><v-icon size="40">mdi-account-circle</v-icon></div>
                 <p class="text-center font-weight-bold">Create an account</p>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-text-field v-model="nickName" :rules="nickNameRules" :counter="10" label="Nickname" required class="my-4"></v-text-field>
+                    <v-text-field v-model="userName" :rules="userNameRules" :counter="10" label="Username" required class="my-4"></v-text-field>
 
                     <v-text-field v-model="email" :rules="emailRules" label="E-mail" required class="my-4"></v-text-field>
 
@@ -20,9 +20,9 @@
                         class="my-4"
                     ></v-switch>
 
-                    <v-btn block color="success" @click="validate"> Validate </v-btn>
-                    <v-divider></v-divider>
-                    <div class="text-center my-3"><router-link to="/login" class="custom-link">Already registered?</router-link></div>
+                    <v-btn block color="primary" @click="validate"> Validate </v-btn>
+                    <v-divider class="my-3"></v-divider>
+                    <div class="text-center"><router-link to="/login" class="custom-link">Already registered?</router-link></div>
                 </v-form>
             </v-card>
         </v-col>
@@ -34,10 +34,10 @@ import { ref } from 'vue';
 
 const form = ref();
 const valid = ref(true);
-const nickName = ref<string>('');
-const nickNameRules = [
-    (v: string) => !!v || 'Nickname is required',
-    (v: string) => (v && v.length <= 10) || 'Nickname must be less than 10 characters',
+const userName = ref<string>('');
+const userNameRules = [
+    (v: string) => !!v || 'UserName is required',
+    (v: string) => (v && v.length <= 10) || 'UserName must be less than 10 characters',
 ];
 const email = ref<string>('');
 const emailRules = [(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid'];
