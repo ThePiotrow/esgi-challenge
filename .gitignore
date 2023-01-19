@@ -1,6 +1,7 @@
 **/.env
 **/helm/api-platform/charts/*
 !**/helm/api-platform/charts/.gitignore
+**/bin/console
 
 **/.DS_Store
 **/node_modules/
