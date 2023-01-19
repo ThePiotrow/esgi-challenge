@@ -18,6 +18,6 @@ class UserController extends AbstractController
     #[Route('/me', name: 'users_me', methods: ['GET'])]
     public function getMe(Security $security, UserRepository $userRepository, SerializerInterface $serializer): Response
     {
-        return new Response($serializer->serialize($userRepository->find($security->getUser()->getId()), 'json'), 200, ["Content-Type" => "application/json"]);
+        return new Response($serializer->serialize($security->getUser(), 'json'), 200, ["Content-Type" => "application/json"]);
     }
 }
