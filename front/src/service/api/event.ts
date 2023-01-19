@@ -24,7 +24,7 @@ class Event {
         }
     }
 
-    async _createEvent(payload: EventI): Promise<void> {
+    async _createEvent(payload: EventI): Promise<EventI> {
         try {
             const res = await client.post(namespace, payload);
             return res.data;
@@ -53,6 +53,6 @@ class Event {
     }
 }
 
-const event = new Event();
+const eventService = new Event();
 
-export default event;
+export default eventService;

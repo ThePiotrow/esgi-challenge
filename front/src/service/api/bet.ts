@@ -25,7 +25,7 @@ class Bet {
         }
     }
 
-    async _createBet(payload: any): Promise<void> {
+    async _createBet(payload: any): Promise<FightBetI> {
         try {
             const res = await client.post(namespace, payload);
             return res.data;
@@ -33,27 +33,8 @@ class Bet {
             throw error;
         }
     }
-
-    async _upadateEvent(payload: any): Promise<any> {
-        try {
-            const res = await client.put(namespace, payload);
-            return res.data;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async _deleteEvent(id: string): Promise<void> {
-        try {
-            const uri = `${namespace}/${id}`;
-            const res = await client.delete(uri);
-            return res.data;
-        } catch (error) {
-            throw error;
-        }
-    }
 }
 
-const bet = new Bet();
+const betService = new Bet();
 
-export default bet;
+export default betService;

@@ -24,7 +24,7 @@ class Fighter {
         }
     }
 
-    async _createFighter(payload: FighterI): Promise<void> {
+    async _createFighter(payload: FighterI): Promise<FighterI> {
         try {
             const res = await client.post(namespace, payload);
             return res.data;
@@ -53,6 +53,6 @@ class Fighter {
     }
 }
 
-const fighter = new Fighter();
+const fighterService = new Fighter();
 
-export default fighter;
+export default fighterService;
