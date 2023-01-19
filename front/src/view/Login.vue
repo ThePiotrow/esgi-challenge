@@ -1,7 +1,7 @@
 <template>
     <v-row no-gutters justify="center">
-        <v-col cols="12" md="6" lg="3">
-            <v-card class="pa-3 mt-12">
+        <v-col cols="10" md="6" lg="4">
+            <v-card class="pa-5 mt-12">
                 <div class="text-center"><v-icon size="40">mdi-account-circle</v-icon></div>
                 <p class="text-center font-weight-bold">Login</p>
                 <v-form ref="form" v-model="valid" lazy-validation>
@@ -10,9 +10,9 @@
                     <v-text-field v-model="password" label="Password" type="password" required class="mt-4"></v-text-field>
                     <div class="text-caption mb-4"><router-link to="/resetpassword" class="custom-link">Forgot your password?</router-link></div>
 
-                    <v-btn block color="success" @click="validate"> Login </v-btn>
-                    <v-divider></v-divider>
-                    <div class="text-center my-3"><router-link to="/signup" class="custom-link">Not registered yet?</router-link></div>
+                    <v-btn block color="primary" @click="validate"> Login </v-btn>
+                    <v-divider class="my-3"></v-divider>
+                    <div class="text-center"><router-link to="/signup" class="custom-link">Not registered yet?</router-link></div>
                 </v-form>
             </v-card>
         </v-col>
@@ -31,6 +31,7 @@ const password = ref<string>('');
 
 async function validate() {
     const { valid } = await form.value.validate();
+    console.log(valid);
 
     if (valid) alert('Form is valid');
 }

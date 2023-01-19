@@ -1,9 +1,8 @@
 <template>
     <div>
         <v-row no-gutters justify="center">
-            <v-btn @click="step = 1">RESET</v-btn>
-            <v-col cols="12" md="6" lg="5">
-                <v-card class="pa-3 mt-12">
+            <v-col cols="10" md="6" lg="5">
+                <v-card class="pa-5 mt-12">
                     <!-- STEP 1 -->
                     <div v-if="step === 1">
                         <p class="mb-2 text-h5 font-weight-bold">What kind of bettor are you?</p>
@@ -27,15 +26,27 @@
                                 <div class="text-center">{{ bettorLevel.id }}</div>
                             </v-col>
                         </v-row>
-                        <v-text-field
-                            v-model="selectedWeaklyMaxDeposit"
-                            label="Maximum weekly deposit"
-                            type="number"
-                            :rules="weaklyMaxDepositRules"
-                            required
-                            @click:append-inner="weaklyMaxDepositInfo = true"
-                            append-inner-icon="mdi-help-circle"
-                        ></v-text-field>
+                        <v-form ref="betSettingsForm" v-model="validBetSettingsForm" lazy-validation>
+                            <v-text-field
+                                v-model="selectedWeaklyMaxDeposit"
+                                label="Maximum weekly deposit"
+                                type="number"
+                                :rules="weaklyMaxDepositRules"
+                                required
+                                @click:append-inner="weaklyMaxDepositInfo = true"
+                                append-inner-icon="mdi-help-circle"
+                            ></v-text-field>
+                            <v-text-field
+                                v-model="selectedWeaklyMaxBet"
+                                label="Maximum weekly bet"
+                                type="number"
+                                :rules="weaklyMaxBetRules"
+                                required
+                                @click:append-inner="weaklyMaxBetInfo = true"
+                                append-inner-icon="mdi-help-circle"
+                            ></v-text-field>
+                            <v-btn block @click="validateBetSettings">Continue</v-btn>
+                        </v-form>
                         <v-dialog width="400" v-model="weaklyMaxDepositInfo">
                             <v-card rounded="xl" class="pa-3">
                                 <p class="font-weight-bold text-center">Information</p>
@@ -46,15 +57,6 @@
                                 <v-btn class="my-2 px-3" block color="primary" @click="weaklyMaxDepositInfo = false">OK</v-btn>
                             </v-card>
                         </v-dialog>
-                        <v-text-field
-                            v-model="selectedWeaklyMaxBet"
-                            label="Maximum weekly bet"
-                            type="number"
-                            :rules="weaklyMaxBetRules"
-                            required
-                            @click:append-inner="weaklyMaxBetInfo = true"
-                            append-inner-icon="mdi-help-circle"
-                        ></v-text-field>
                         <v-dialog width="400" v-model="weaklyMaxBetInfo">
                             <v-card rounded="xl" class="pa-3">
                                 <p class="font-weight-bold text-center">Information</p>
@@ -66,31 +68,53 @@
                             </v-card>
                         </v-dialog>
                         <p class="text-caption">You will be able to change this setting in your profile later.</p>
-                        <v-btn block @click="step = 2">Continue</v-btn>
                     </div>
+                    <!-- STEP 2 -->
                     <div v-if="step === 2">
                         <p class="my-3 text-h5 font-weight-bold">How much do you want to deposit?</p>
+                        <v-form>
+                            <v-row no-gutters justify="center">
+                                <v-col cols="10" lg="4">
+                                    <v-text-field
+                                        focused
+                                        class="inputPrice"
+                                        v-model="selectedDeposit"
+                                        type="number"
+                                        :rules="selectedDepositRules"
+                                        required
+                                        append-inner-icon="mdi-currency-eur"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
 
-                        <p class="my-3">
-                            You can deposit up to <span class="font-weight-bold text-h4">€{{ selectedWeaklyMaxDeposit }}</span> per week.
-                        </p>
+                            <v-row no-gutters justify="center">
+                                <div v-for="n in percentages" class="text-center">
+                                    <v-btn
+                                        :active="n === activeItem"
+                                        @click="
+                                            selectItem(n);
+                                            selectedDeposit = Math.round(selectedWeaklyMaxDeposit * n);
+                                        "
+                                        class="mx-3 custom-price"
+                                        variant="outlined"
+                                        height="60"
+                                        size="x-large"
+                                        >{{ Math.round(selectedWeaklyMaxDeposit * n) }} €</v-btn
+                                    >
+                                </div>
+                            </v-row>
+                            <v-divider class="my-3"></v-divider>
+                            <p class="font-weight-bold">Payment</p>
 
-                        <v-text-field
-                            v-model="selectedDeposit"
-                            label="Maximum weekly deposit"
-                            type="number"
-                            :rules="selectedDepositRules"
-                            required
-                            append-inner-icon="mdi-euros"
-                        ></v-text-field>
-                        <div>{{ Math.round(selectedWeaklyMaxDeposit / 4) }}</div>
-                        <div>{{ Math.round(selectedWeaklyMaxDeposit / 3) }}</div>
-                        <div>{{ Math.round(selectedWeaklyMaxDeposit / 2) }}</div>
-                        <div>{{ Math.round(selectedWeaklyMaxDeposit / 1) }}</div>
-
-                        <v-btn block @click="step = 3">Continue</v-btn>
+                            <v-btn class="my-3" block @click="step = 3">Continue</v-btn>
+                        </v-form>
                     </div>
+                    <v-btn @click="step = 1">RESET</v-btn>
                 </v-card>
+                <div class="text-center my-4">
+                    <v-img src="/assets/visa_logo.svg" />
+                    <p><v-icon>mdi-lock</v-icon>100% secure payment, PCI-DSS certified</p>
+                </div>
             </v-col>
         </v-row>
     </div>
@@ -98,25 +122,30 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-const selectedDeposit = ref<number>(10);
+const betSettingsForm = ref();
+const validBetSettingsForm = ref(true);
 const selectedDepositRules = [
     (v: number) => !!v || 'A value is required',
-    (v: number) => (v >= 10 && v <= selectedWeaklyMaxDeposit) || 'Select a value between 10€ and 5000€',
+    (v: number) => (v >= 10 && v <= 5000) || 'Select a value between 10€ and 5000€',
 ];
 const selectedBettorLevel = ref<string>('Beginner');
-const selectedWeaklyMaxDeposit = ref<number>(20);
+const selectedWeaklyMaxDeposit = ref<number>(200);
 const weaklyMaxDepositRules = [
     (v: number) => !!v || 'A value is required',
     (v: number) => (v >= 10 && v <= 5000) || 'Select a value between 10€ and 5000€',
 ];
 const weaklyMaxDepositInfo = ref<boolean>(false);
-const selectedWeaklyMaxBet = ref<number>(0);
+const selectedWeaklyMaxBet = ref<number>(500);
 const weaklyMaxBetRules = [
     (v: number) => !!v || 'A value is required',
     (v: number) => (v >= 10 && v <= 10000) || 'Select a value between 10€ and 10000€',
 ];
 const weaklyMaxBetInfo = ref<boolean>(false);
 const step = ref<number>(1);
+
+const percentages = [1 / 8, 1 / 4, 1 / 2, 1];
+
+const selectedDeposit = ref<number>(0);
 
 const bettorLevels = [
     {
@@ -138,10 +167,36 @@ const bettorLevels = [
         weaklyMaxBet: 10000,
     },
 ];
+
+async function validateBetSettings() {
+    const validBetSettingsForm = await betSettingsForm.value.validate();
+    if (validBetSettingsForm.valid) {
+        step.value = 2;
+    }
+}
+
+const activeItem = ref(0);
+function selectItem(i: number) {
+    activeItem.value = i;
+}
 </script>
 
 <style scoped>
 .v-btn {
     text-transform: none;
+}
+.inputPrice >>> input::-webkit-outer-spin-button,
+.inputPrice >>> input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+::v-deep .v-text-field input {
+    font-size: 32px !important;
+    font-weight: bold;
+}
+.custom-price {
+    font-size: 24px;
+    font-weight: bold;
 }
 </style>
