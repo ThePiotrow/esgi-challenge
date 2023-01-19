@@ -1,13 +1,13 @@
 import { SigninI, SignupI, TokenI, UserI } from "../../interfaces/payload";
-import { client } from "../index";
-import { clientWithoutAuth } from "../index";
-
+import { client, clientWithoutAuth, token } from "../index";
 class User {
 
     async _signin(payload: SigninI): Promise<TokenI> {
         try {
+            
             const uri = '/authentication_token'
             const res = await clientWithoutAuth.post(uri, payload);
+            token.value = res.data.token;
             return res.data;
         } catch (error) {
             throw error;

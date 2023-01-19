@@ -5,7 +5,7 @@
             <v-app-bar-nav-icon color="white" @click="emit('toggleNavigationDrawer')"></v-app-bar-nav-icon>
         </template>
 
-        <v-app-bar-title>Thunderous Knockout Fighting</v-app-bar-title>
+        <v-app-bar-title @click="router.push({ name: 'home' })" style="cursor: pointer">Thunderous Knockout Fighting</v-app-bar-title>
         <v-spacer></v-spacer>
 
         <template v-if="isConnected">
@@ -46,8 +46,8 @@
 
         <template v-else>
             <div class="d-flex mr-3" style="gap: 0.75rem;">
-                <v-btn color="secondary" variant="flat">signup</v-btn>
-                <v-btn color="white" variant="flat">signin</v-btn>
+                <v-btn @click="router.push({ name: 'signup' })" color="secondary" variant="flat">signup</v-btn>
+                <v-btn @click="router.push({ name: 'login' })" color="white" variant="flat">signin</v-btn>
             </div>
         </template>
     </v-app-bar>

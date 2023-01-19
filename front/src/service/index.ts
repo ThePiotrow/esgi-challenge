@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { useStorage } from "@vueuse/core";
-import { computed, Ref } from "vue";
-
+import { computed } from "vue";
 export const token = useStorage('token', '');
 
 const config = computed(() => {

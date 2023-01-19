@@ -17,7 +17,7 @@ router.beforeResolve((to, from, next) => {
         else if (to?.meta?.requiresAdmin) {
             if (!isAdmin.value) next({ name: 'login' });
             else next();
-        }
+        } else next();
     } else {
         next();
     }

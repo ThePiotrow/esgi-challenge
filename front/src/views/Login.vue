@@ -20,7 +20,12 @@
 </template>
 
 <script lang="ts" setup>
+import { createToast } from 'mosha-vue-toastify';
 import { ref } from 'vue';
+import router from '../router';
+import { useUserStore } from '../stores/user';
+const userStore = useUserStore();
+const { signin } = userStore;
 
 const form = ref();
 const valid = ref(true);
@@ -31,9 +36,18 @@ const password = ref<string>('');
 
 async function validate() {
     const { valid } = await form.value.validate();
-    console.log(valid);
-
-    if (valid) alert('Form is valid');
+    if (valid) {
+        try {
+            const payload = {
+                email: email.value,
+                password: password.value
+            }
+            await signin(payload);
+            router.push({ name: 'home' });
+        } catch (error: any) {
+            createToast(error, { type: 'danger'})
+        }
+    }
 }
 </script>
 

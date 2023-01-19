@@ -10,10 +10,10 @@ export const useUserStore = defineStore('user', () => {
     const { _signin, _signup, _getUser, _getUsers, _signinWithToken } = userService;
 
     const user = reactive<userInterface>({
-        id: '1',
-        email: 'admin@gmail.com',
-        username: 'admin',
-        roles: ['ROLE_USER']
+        id: '',
+        email: '',
+        username: '',
+        roles: []
     })
 
     const isAdmin = computed(() => {
@@ -36,6 +36,8 @@ export const useUserStore = defineStore('user', () => {
         try {
             const res = await _signin(payload);
             token.value = res.token;
+            const user = await _getUser();
+            console.log(user)
         } catch (e) {
 
         }
