@@ -3,16 +3,17 @@ import { computed, reactive } from 'vue'
 import { userService } from '../service/api';
 import type { SigninI, SignupI } from '../interfaces/payload';
 import { userInterface } from '../interfaces/responseAPI';
+import { token } from '../service';
 
 export const useUserStore = defineStore('user', () => {
 
-    const { _signin, _signup } = userService;
+    const { _signin, _signup, _getUser, _getUsers, _signinWithToken } = userService;
 
     const user = reactive<userInterface>({
         id: '1',
         email: 'admin@gmail.com',
         username: 'admin',
-        roles: ['ROLE_ADMIN']
+        roles: ['ROLE_USER']
     })
 
     const isAdmin = computed(() => {
@@ -34,6 +35,7 @@ export const useUserStore = defineStore('user', () => {
     async function signin(payload: SigninI) {
         try {
             const res = await _signin(payload);
+            token.value = res.token;
         } catch (e) {
 
         }
