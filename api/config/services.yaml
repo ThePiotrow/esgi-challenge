@@ -30,6 +30,4 @@ services:
     App\State\UserPasswordHasher:
         bind:
             $processor: '@ApiPlatform\Doctrine\Common\State\PersistProcessor'
-            
-    App\Controller\UserMeController:
-        tags: [ 'controller.service_arguments' ]
+
