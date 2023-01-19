@@ -29,11 +29,10 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
     operations: [
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
-        new Get(),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
         new Delete(),
-        new Post(
+        new Get(
             name: 'me',
             uriTemplate: '/users/me',
             controller: UserController::class
