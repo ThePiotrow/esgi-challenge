@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Post;
 use App\Controller\ResetPasswordController;
 use App\Entity\Traits\EntityIdTrait;
 use App\Repository\UserRepository;
+use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -66,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Sponsorship $sponsorship = null;
 
     #[ORM\Column(options: ['default' => false])]
-    private ?bool $email_validated = null;
+    private ?bool $email_validated = false;
 
     public function __construct()
     {
