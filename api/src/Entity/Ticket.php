@@ -17,8 +17,8 @@ class Ticket
 {
     use EntityIdTrait;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
+    #[ORM\Column(type: 'float')]
+    private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
@@ -35,6 +35,10 @@ class Ticket
 
     #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: Order::class)]
     private Collection $orders;
+
+    #[ORM\ManyToOne(inversedBy: 'tickets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Event $event = null;
 
     public function __construct()
     {
@@ -127,6 +131,18 @@ class Ticket
                 $order->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
 
         return $this;
     }

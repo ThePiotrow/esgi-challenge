@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\ResetPasswordController;
+use App\Controller\UserMeController;
 use App\Entity\Traits\EntityIdTrait;
 use App\Repository\UserRepository;
 use App\State\UserPasswordHasher;
@@ -27,7 +28,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
     operations: [
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
-        new Get(),
+        new Get(
+            uriTemplate: '/users/me',
+            controller: UserMeController::class,
+            name: 'me'
+        ),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
         new Delete(),
