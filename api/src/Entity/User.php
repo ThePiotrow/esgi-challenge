@@ -27,16 +27,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
     operations: [
+        new Get(),
         new GetCollection(),
         new Post(processor: UserPasswordHasher::class),
         new Put(processor: UserPasswordHasher::class),
         new Patch(processor: UserPasswordHasher::class),
-        new Delete(),
-        new Get(
-            name: 'me',
-            uriTemplate: '/users/me',
-            controller: UserController::class
-        )
+        new Delete()
     ]
 )]
 #[Post]
@@ -80,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_order', targetEntity: Order::class)]
     private Collection $orders;
 
-    #[ORM\OneToMany(mappedBy: 'Sponsor', targetEntity: Sponsorship::class)]
+    #[ORM\OneToMany(mappedBy: 'sponsor', targetEntity: Sponsorship::class)]
     private Collection $sponsorships;
 
     #[ORM\OneToOne(mappedBy: 'sponsored', cascade: ['persist', 'remove'])]
