@@ -21,6 +21,7 @@ class UserController extends AbstractController
         $response = array('user' => $user);
 
         $jsonObject = $serializer->serialize($response, 'json', [
+            'groups' => ["user", "timestamp", "user_restaurant", "restaurant"],
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
