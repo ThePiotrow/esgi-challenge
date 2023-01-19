@@ -8,22 +8,19 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     // const userStore = useUserStore();
-//     // const { isAdmin, isConnected } = storeToRefs(userStore);
+router.beforeResolve((to, from, next) => {
+    const userStore = useUserStore();
+    const { isAdmin, isConnected } = storeToRefs(userStore);
 
-//     // console.log('config', to.meta.requiresAdmin, isAdmin.value)
-//     // console.log(to.meta.requiresAuth && isConnected.value && !to.meta.requiresAdmin)
-//     console.log('hey les man')
-//     if (to.meta.requiresAdmin && to.meta.requiresAuth) {
-//         // console.log('requiresAdmin', isAdmin)
-//         next();
-//     } else if (to.meta.requiresAuth && !to.meta.requiresAdmin) {
-//         next();
-//     } else {
-//         console.log('else')
-//         next({ name: 'login' });
-//     }
-// })
+    if (to?.meta?.requiresAuth) {
+        if (!isConnected.value) next({ name: 'login' }) 
+        else if (to?.meta?.requiresAdmin) {
+            if (!isAdmin.value) next({ name: 'login' });
+            else next();
+        }
+    } else {
+        next();
+    }
+})
 
 export default router;

@@ -3,10 +3,10 @@ import Bet from "../views/Bet.vue"
 import Fighter from "../views/Fighter.vue"
 import Sponsorship from "../views/Sponsorship.vue"
 import Event from "../views/Event.vue"
-import Login from "../view/Login.vue"
-import Signup from "../view/Signup.vue"
-import ResetPassword from "../view/ResetPassword.vue"
-import Deposit from "../view/Deposit.vue"
+import Login from "../views/Login.vue"
+import Signup from "../views/Signup.vue"
+import ResetPassword from "../views/ResetPassword.vue"
+import Deposit from "../views/Deposit.vue"
 
 export default [
     {
