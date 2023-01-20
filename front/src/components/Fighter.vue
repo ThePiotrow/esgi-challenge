@@ -183,9 +183,10 @@ export default defineComponent({
         weight: (value: number) => (value >= 52 && value <= 400) || 'Weight must be between 52kg and 400kg'
     }
 
-    const createFighter = () => {
+    const createFighter = async () => {
         try {
-            if (form.value.validate()) {
+          const { valid } = await form.value.validate()
+            if (valid) {
                 console.log(fighter)
                 // CALL CREATE FIGHTER
             }
