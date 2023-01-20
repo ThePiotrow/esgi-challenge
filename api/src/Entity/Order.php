@@ -33,6 +33,9 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user_order = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $stripe = null;
+
     public function getStatus(): ?OrderStatusType
     {
         return $this->status;
@@ -89,6 +92,18 @@ class Order
     public function setUserOrder(?User $user_order): self
     {
         $this->user_order = $user_order;
+
+        return $this;
+    }
+
+    public function getStripe(): ?string
+    {
+        return $this->stripe;
+    }
+
+    public function setStripe(string $stripe): self
+    {
+        $this->stripe = $stripe;
 
         return $this;
     }
