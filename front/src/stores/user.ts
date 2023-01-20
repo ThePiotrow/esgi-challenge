@@ -7,13 +7,13 @@ import { token } from '../service';
 
 export const useUserStore = defineStore('user', () => {
 
-    const { _signin, _signup, _getUser, _getUsers, _signinWithToken } = userService;
+    const { _signin, _signup, _getSelfUser, _getUsers, _signinWithToken } = userService;
 
     const user = reactive<userInterface>({
         id: '',
-        email: '',
-        username: '',
-        roles: []
+        email: 'fefzfezf',
+        username: 'efezf',
+        roles: ['ROLE_ADMIN']
     })
 
     const isAdmin = computed(() => {
@@ -36,7 +36,7 @@ export const useUserStore = defineStore('user', () => {
         try {
             const res = await _signin(payload);
             token.value = res.token;
-            const user = await _getUser();
+            const user = await _getSelfUser();
             console.log(user)
         } catch (e) {
 
