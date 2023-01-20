@@ -16,7 +16,7 @@ class Sponsorship
 
     #[ORM\ManyToOne(inversedBy: 'sponsorships')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $Sponsor = null;
+    private ?User $sponsor = null;
 
     #[ORM\OneToOne(inversedBy: 'sponsorship', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -30,12 +30,12 @@ class Sponsorship
 
     public function getSponsor(): ?User
     {
-        return $this->Sponsor;
+        return $this->sponsor;
     }
 
-    public function setSponsor(?User $Sponsor): self
+    public function setSponsor(?User $sponsor): self
     {
-        $this->Sponsor = $Sponsor;
+        $this->sponsor = $sponsor;
 
         return $this;
     }
