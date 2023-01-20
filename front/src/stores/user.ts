@@ -11,7 +11,14 @@ export const useUserStore = defineStore('user', () => {
 
     const { _signin, _signup, _getSelfUser, _getUsers, _signinWithToken } = userService;
 
-    const user = ref<userInterface>();
+    const user = ref<userInterface>({
+        id: '',
+        username: 'antoine',
+        roles: ['ROLE_ADMIN'],
+        email: 'antoine@email.fr'
+    });
+
+    const users = ref<userInterface[]>([]);
 
     const isAdmin = computed(() => {
         return user.value?.roles.includes('ROLE_ADMIN');
@@ -58,5 +65,14 @@ export const useUserStore = defineStore('user', () => {
 
         }
     }
-    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout }
+
+    async function getUsers() {
+        try {
+            users.value = await _getUsers();
+        } catch (error) {
+            
+        }
+    }
+
+    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout, getUsers, users }
 });

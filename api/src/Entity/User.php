@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\ResetPasswordController;
 use App\Controller\UserController;
+use App\Controller\UserNotVIPController;
 use App\Entity\Traits\EntityIdTrait;
 use App\Repository\UserRepository;
 use App\State\UserPasswordHasher;
@@ -131,6 +132,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->roles);
+    }
+
+    public function isVIP(): bool
+    {
+        return in_array('ROLE_VIP', $this->roles);
+    }
+
+    public function isVVIP(): bool
+    {
+        return in_array('ROLE_VVIP', $this->roles);
     }
 
     /**

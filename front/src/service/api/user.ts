@@ -45,7 +45,7 @@ class User {
         }
     } 
 
-  async _getUsers(): Promise<UserI> {
+  async _getUsers(): Promise<userInterface[]> {
         try {
             const uri = '/users'
             const res = await client.get(uri);

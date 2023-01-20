@@ -5,9 +5,9 @@
                 <div class="text-center"><v-icon size="40">mdi-account-circle</v-icon></div>
                 <p class="text-center font-weight-bold">Login</p>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required class="my-4"></v-text-field>
+                    <v-text-field v-model="email" :rules="emailRules" autocomplete="email" label="E-mail" required class="my-4"></v-text-field>
 
-                    <v-text-field v-model="password" label="Password" type="password" required class="mt-4"></v-text-field>
+                    <v-text-field v-model="password" label="Password" autocomplete="current-password" type="password" required class="mt-4"></v-text-field>
                     <div class="text-caption mb-4"><router-link to="/resetpassword" class="custom-link">Forgot your password?</router-link></div>
 
                     <v-btn block color="primary" @click="validate"> Login </v-btn>
