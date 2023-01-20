@@ -36,7 +36,7 @@ class User {
 
     async _getSelfUser(): Promise<UserI> {
         try {
-            const uri = '/users/me'
+            const uri = '/me'
             const res = await client.get(uri);
             return res.data;
         } catch (error) {

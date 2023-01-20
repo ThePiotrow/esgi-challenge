@@ -11,8 +11,8 @@ export const useUserStore = defineStore('user', () => {
 
     const user = reactive<userInterface>({
         id: '',
-        email: 'fefzfezf',
-        username: 'efezf',
+        email: 'antoine@gmail.com',
+        username: 'antoine',
         roles: ['ROLE_ADMIN']
     })
 
