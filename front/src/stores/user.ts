@@ -1,34 +1,33 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, ref } from 'vue'
 import { userService } from '../service/api';
 import type { SigninI, SignupI } from '../interfaces/payload';
-import { userInterface } from '../interfaces/responseAPI';
+import type { userInterface } from '../interfaces/responseAPI';
 import { token } from '../service';
+import { useRouter } from "vue-router"
 
 export const useUserStore = defineStore('user', () => {
+    const router = useRouter();
 
     const { _signin, _signup, _getSelfUser, _getUsers, _signinWithToken } = userService;
 
-    const user = reactive<userInterface>({
-        id: '',
-        email: 'antoine@gmail.com',
-        username: 'antoine',
-        roles: ['ROLE_ADMIN']
-    })
+    const user = ref<userInterface>();
 
     const isAdmin = computed(() => {
-        return user.roles.includes('ROLE_ADMIN');
+        return user.value?.roles.includes('ROLE_ADMIN');
     });
 
     const isConnected = computed(() => {
-        return !!user.email;
+        return !!user.value?.email;
     });
 
     async function toggleAdmin() {
-        if (user.roles.includes('ROLE_ADMIN')) {
-            user.roles = ['ROLE_USER']
-        } else {
-            user.roles = ['ROLE_ADMIN']
+        if (user.value) {
+            if (user.value.roles.includes('ROLE_ADMIN')) {
+                user.value.roles = ['ROLE_USER']
+            } else {
+                user.value.roles = ['ROLE_ADMIN']
+            }
         }
     }
 
@@ -36,8 +35,8 @@ export const useUserStore = defineStore('user', () => {
         try {
             const res = await _signin(payload);
             token.value = res.token;
-            const user = await _getSelfUser();
-            console.log(user)
+            const self = await _getSelfUser();
+            user.value = self;
         } catch (e) {
 
         }
@@ -50,5 +49,14 @@ export const useUserStore = defineStore('user', () => {
 
         }
     }
-    return { signin, signup, isAdmin, isConnected, user, toggleAdmin }
+
+    async function logout() {
+        try {
+            user.value = undefined;
+            router.push({ name: 'login' });
+        } catch (e) {
+
+        }
+    }
+    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout }
 });

@@ -14,6 +14,7 @@ export interface UserI {
 	email: string
 	username: string
 	roles: string[]
+	emailValidated: boolean
 }
 
 export interface TokenI {

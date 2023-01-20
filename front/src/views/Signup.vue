@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { SignupI } from '../interfaces/payload';
+import { SignupIP } from '../interfaces/payload';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../stores/user';
 
@@ -56,7 +56,7 @@ async function validate() {
 
     if (valid) {
         try {
-            const payload: SignupI = {
+            const payload: SignupIP = {
                 username: username.value,
                 password: password.value,
                 email: email.value

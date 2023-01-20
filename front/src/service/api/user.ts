@@ -1,4 +1,5 @@
 import { SigninI, SignupI, TokenI, UserI } from "../../interfaces/payload";
+import { userInterface } from "../../interfaces/responseAPI";
 import { client, clientWithoutAuth, token } from "../index";
 class User {
 
@@ -34,7 +35,7 @@ class User {
         }
     } 
 
-    async _getSelfUser(): Promise<UserI> {
+    async _getSelfUser(): Promise<userInterface> {
         try {
             const uri = '/me'
             const res = await client.get(uri);
