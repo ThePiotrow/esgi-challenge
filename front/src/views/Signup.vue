@@ -5,7 +5,7 @@
                 <div class="text-center"><v-icon size="40">mdi-account-circle</v-icon></div>
                 <p class="text-center font-weight-bold">Create an account</p>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-text-field v-model="userName" :rules="userNameRules" :counter="10" label="Username" required class="my-4"></v-text-field>
+                    <v-text-field v-model="username" :rules="usernameRules" :counter="10" label="Username" required class="my-4"></v-text-field>
 
                     <v-text-field v-model="email" :rules="emailRules" label="E-mail" required class="my-4"></v-text-field>
 
@@ -31,25 +31,42 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { SignupI } from '../interfaces/payload';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/user';
 
+const userStore = useUserStore();
+const { signup } = userStore;
+
+const router = useRouter();
 const form = ref();
-const valid = ref(true);
-const userName = ref<string>('');
-const userNameRules = [
+const valid = ref<boolean>(false);
+const username = ref<string>('');
+const usernameRules = [
     (v: string) => !!v || 'UserName is required',
     (v: string) => (v && v.length <= 10) || 'UserName must be less than 10 characters',
 ];
 const email = ref<string>('');
 const emailRules = [(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid'];
-
 const password = ref<string>('');
-
 const checkbox = ref<boolean>(false);
 
 async function validate() {
     const { valid } = await form.value.validate();
 
-    if (valid) alert('Form is valid');
+    if (valid) {
+        try {
+            const payload: SignupI = {
+                username: username.value,
+                password: password.value,
+                email: email.value
+            }
+            await signup(payload);
+            router.push({ name: 'login' });
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 </script>
 
