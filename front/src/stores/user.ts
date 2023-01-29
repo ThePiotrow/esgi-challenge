@@ -9,13 +9,13 @@ import { useRouter } from "vue-router"
 export const useUserStore = defineStore('user', () => {
     const router = useRouter();
 
-    const { _signin, _signup, _getSelfUser, _getUsers, _signinWithToken } = userService;
+    const { _signin, _signup, _getSelfUser, _getUsers, _signinWithToken, _changePassword, _updateUser } = userService;
 
     const user = ref<userInterface>({
         id: '',
-        username: 'antoine',
-        roles: ['ROLE_ADMIN'],
-        email: 'antoine@email.fr'
+        username: '',
+        roles: [''],
+        email: ''
     });
 
     const users = ref<userInterface[]>([]);
@@ -44,16 +44,35 @@ export const useUserStore = defineStore('user', () => {
             token.value = res.token;
             const self = await _getSelfUser();
             user.value = self;
-        } catch (e) {
-
+        } catch (error) {
+            throw error;
         }
     }
 
     async function signup(payload: SignupI) {
         try {
             const res = await _signup(payload);
-        } catch (e) {
+        } catch (error) {
+            throw error;
+        }
+    }
 
+    async function signinWithToken(LStoken: string) {
+        try {
+            const res = await _signinWithToken(LStoken);
+            token.value = res.token;
+            const self = await _getSelfUser();
+            user.value = self;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async function changePassword(payload: { password: string, newPassword: string }): Promise<void> {
+        try {
+            await _changePassword(payload);
+        } catch (error) {
+            throw error;
         }
     }
 
@@ -61,8 +80,8 @@ export const useUserStore = defineStore('user', () => {
         try {
             user.value = undefined;
             router.push({ name: 'login' });
-        } catch (e) {
-
+        } catch (error) {
+            throw error;
         }
     }
 
@@ -70,9 +89,18 @@ export const useUserStore = defineStore('user', () => {
         try {
             users.value = await _getUsers();
         } catch (error) {
-            
+            throw error;
         }
     }
 
-    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout, getUsers, users }
+    async function updateUser(payload: { id: string }) {
+        try {
+            const res = await _updateUser(payload);
+            user.value = res;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout, getUsers, users, signinWithToken, changePassword, updateUser }
 });

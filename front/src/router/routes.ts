@@ -1,12 +1,21 @@
-import Home from "../views/Home.vue"
-import Bet from "../views/Bet.vue"
-import Fighter from "../views/Fighter.vue"
-import Sponsorship from "../views/Sponsorship.vue"
-import Event from "../views/Event.vue"
-import Login from "../views/Login.vue"
-import Signup from "../views/Signup.vue"
-import ResetPassword from "../views/ResetPassword.vue"
-import Deposit from "../views/Deposit.vue"
+import Home from "@/views/Home.vue"
+import Bet from "@/views/Bet.vue"
+import Fighters from "@/views/Fighters.vue"
+import FighterDetails from "@/views/FighterDetails.vue"
+import Event from "@/views/admin/Event.vue"
+import Login from "@/views/Login.vue"
+import Signup from "@/views/Signup.vue"
+import ResetPassword from "@/views/ResetPassword.vue"
+import Deposit from "@/views/Deposit.vue"
+
+import Sponsorship from "@/views/admin/Sponsorship.vue"
+import FightersAdmin from "@/views/admin/Fighters.vue"
+import AdminView from "@/views/admin/AdminView.vue"
+
+import ProfileView from "@/views/Profile.vue";
+import Profile from "@/components/profile/Profile.vue";
+import UserBet from "@/components/profile/Bet.vue";
+import ChangePassword from "@/components/profile/ChangePassword.vue";
 
 export default [
     {
@@ -16,22 +25,64 @@ export default [
         meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
+        path: '/admin',
+        component: AdminView,
+        children: [
+            {
+                path: 'fighters',
+                component: FightersAdmin,
+                name: 'fighter-admin',
+                meta: { requiresAuth: true, requiresAdmin: true }
+            },
+            {
+                path: 'events',
+                component: Event,
+                name: 'event-admin',
+                meta: { requiresAuth: true, requiresAdmin: true }
+            },
+            {
+                path: 'sponsorship',
+                component: Sponsorship,
+                name: 'sponsorship-admin',
+                meta: { requiresAuth: true, requiresAdmin: true }
+            },
+        ]
+    },
+    {
+        path: '/profile',
+        component: ProfileView,
+        children: [
+            {
+                path: '',
+                component: Profile,
+                name: 'user-info',
+                meta: { requiresAuth: true, requiresAdmin: false }
+            },
+            {
+                path: '/bets',
+                component: UserBet,
+                name: 'user-bet',
+                meta: { requiresAuth: true, requiresAdmin: false }
+            },
+            {
+                path: '/security',
+                component: ChangePassword,
+                name: 'user-security',
+                meta: { requiresAuth: true, requiresAdmin: false }
+            }
+        ]
+    },
+    {
         path: '/fighters',
-        component: Fighter,
-        name: 'fighter',
-        meta: { requiresAuth: true, requiresAdmin: true }
+        component: Fighters,
+        name: 'fighters',
+        meta: { requiresAuth: true, requiresAdmin: false }
     },
     {
-        path: '/events',
-        component: Event,
-        name: 'event',
-        meta: { requiresAuth: true, requiresAdmin: true }
-    },
-    {
-        path: '/sponsorship',
-        component: Sponsorship,
-        name: 'sponsorship',
-        meta: { requiresAuth: true, requiresAdmin: true }
+        path: '/fighters/:id',
+        component: FighterDetails,
+        name: 'fighter-details',
+        meta: { requiresAuth: true, requiresAdmin: false }
     },
     {
         path: '/bet',

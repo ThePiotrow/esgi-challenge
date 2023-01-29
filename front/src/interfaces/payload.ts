@@ -27,8 +27,8 @@ export interface FighterI {
 	lastname: string
 	height: number
 	weight: number
-	nationality: string
-	gender: string
+	nationality: string | null
+	gender: string | null
 	birthdate: string
 }
 

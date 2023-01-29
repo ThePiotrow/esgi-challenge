@@ -1,5 +1,8 @@
 api_platform:
     title: Hello API Platform
+    formats: 
+        json:     ['application/json']
+        html:     ['text/html']
     version: 1.0.0
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']

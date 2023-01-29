@@ -14,9 +14,9 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item :to="{ name: 'event' }" exact prepend-icon="mdi-calendar" title="Events" value="events" ></v-list-item>
-      <v-list-item :to="{ name: 'fighter' }" exact prepend-icon="mdi-karate" title="Fighters" value="fighters"></v-list-item>
-      <v-list-item :to="{ name: 'sponsorship' }" exact prepend-icon="mdi-handshake" title="Sponsorships" value="users"></v-list-item>
+      <v-list-item :to="{ name: 'event-admin' }" exact prepend-icon="mdi-calendar" title="Events" value="events" ></v-list-item>
+      <v-list-item :to="{ name: 'fighter-admin' }" exact prepend-icon="mdi-karate" title="Fighters" value="fighters"></v-list-item>
+      <v-list-item :to="{ name: 'sponsorship-admin' }" exact prepend-icon="mdi-handshake" title="Sponsorships" value="users"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

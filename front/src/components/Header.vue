@@ -15,6 +15,7 @@
             </template>
 
             <template v-else>
+                <p @click="router.push({ name: 'fighters' })" class="font-bold cursor-pointer">fighters</p>
                 <v-menu>
                     <template v-slot:activator="{ props }">
                         <v-btn
@@ -70,7 +71,7 @@ export default defineComponent({
             {
                 value: 'Account',
                 icon: 'mdi-account',
-                to: 'account'
+                to: 'user-info'
             },
             {
                 value: 'Wallet',
