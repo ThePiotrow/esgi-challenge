@@ -1,16 +1,29 @@
 <script lang="ts">
 import { storeToRefs } from 'pinia';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import Header from './components/Header.vue';
 import NavigationDrawer from './components/NavigationDrawer.vue';
 import { useUserStore } from './stores/user';
+import { token } from './service';
 export default defineComponent({
     components: { Header, NavigationDrawer },
     setup() {
         const display = ref<boolean>(false);
         
         const userStore = useUserStore();
+        const { signinWithToken } = userStore;
         const { isAdmin } = storeToRefs(userStore);
+
+        onMounted(async () => {
+            if (token.value) {
+                try {
+                    // TODO: Uncomment when the back function is ready
+                    // await signinWithToken(token.value);
+                } catch (error) {
+                    
+                }
+            }
+        })
 
         return { display, isAdmin }
     },

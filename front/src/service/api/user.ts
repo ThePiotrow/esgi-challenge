@@ -25,6 +25,15 @@ class User {
         }
     } 
 
+    async _changePassword(payload: { password: string, newPassword: string }): Promise<void> {
+        try {
+            const uri = '/change-password'
+            await client.put(uri, payload);
+        } catch (error) {
+            throw error;
+        }
+    } 
+
     async _signup(payload: SignupI): Promise<void> {
         try {
             const uri = '/users'
@@ -45,10 +54,21 @@ class User {
         }
     } 
 
-  async _getUsers(): Promise<userInterface[]> {
+    async _getUsers(): Promise<userInterface[]> {
         try {
             const uri = '/users'
             const res = await client.get(uri);
+            return res.data;
+        } catch (error) {
+            throw error;
+        }
+    } 
+
+    
+    async _updateUser(payload: {id: string }): Promise<userInterface> {
+        try {
+            const uri = `/users/${payload.id}`;
+            const res = await client.put(uri, payload);
             return res.data;
         } catch (error) {
             throw error;

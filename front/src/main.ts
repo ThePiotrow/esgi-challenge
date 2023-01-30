@@ -8,6 +8,9 @@ import router from './router'
 import 'vuetify/styles'
 import vuetify from './plugins/vuetify'
 
+// WindyCSS
+import 'virtual:windi.css'
+
 // Mosha-toast-vue
 import 'mosha-vue-toastify/dist/style.css'
 createApp(App).use(vuetify).use(createPinia()).use(router).mount('#app')
