@@ -50,5 +50,6 @@ export const useEventStore = defineStore('event', () => {
             throw error;
         }
     }
-    return { createEvent, getEvent, getEvents, updateEvent, deleteEvent }
+    
+    return { createEvent, getEvent, getEvents, updateEvent, deleteEvent, events, event }
 });

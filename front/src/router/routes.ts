@@ -2,7 +2,8 @@ import Home from "@/views/Home.vue"
 import Bet from "@/views/Bet.vue"
 import Fighters from "@/views/Fighters.vue"
 import FighterDetails from "@/views/FighterDetails.vue"
-import Event from "@/views/admin/Event.vue"
+import Event from "@/views/Event.vue"
+import EventDetails from "@/views/EventDetails.vue"
 import Login from "@/views/Login.vue"
 import Signup from "@/views/Signup.vue"
 import ResetPassword from "@/views/ResetPassword.vue"
@@ -11,6 +12,7 @@ import Deposit from "@/views/Deposit.vue"
 import Sponsorship from "@/views/admin/Sponsorship.vue"
 import FightersAdmin from "@/views/admin/Fighters.vue"
 import AdminView from "@/views/admin/AdminView.vue"
+import EventAdmin from "@/views/admin/Event.vue"
 
 import ProfileView from "@/views/Profile.vue";
 import Profile from "@/components/profile/Profile.vue";
@@ -36,7 +38,7 @@ export default [
             },
             {
                 path: 'events',
-                component: Event,
+                component: EventAdmin,
                 name: 'event-admin',
                 meta: { requiresAuth: true, requiresAdmin: true }
             },
@@ -76,13 +78,25 @@ export default [
         path: '/fighters',
         component: Fighters,
         name: 'fighters',
-        meta: { requiresAuth: true, requiresAdmin: false }
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/fighters/:id',
         component: FighterDetails,
         name: 'fighter-details',
         meta: { requiresAuth: true, requiresAdmin: false }
+    },
+    {
+        path: '/events',
+        component: Event,
+        name: 'events',
+        meta: { requiresAuth: false, requiresAdmin: false }
+    },
+    {
+        path: '/events/:id',
+        component: EventDetails,
+        name: 'event-details',
+        meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
         path: '/bet',

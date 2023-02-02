@@ -6,6 +6,12 @@
         </template>
 
         <v-app-bar-title @click="router.push({ name: 'home' })" style="cursor: pointer">Thunderous Knockout Fighting</v-app-bar-title>
+        
+        <div class="flex gap-3">
+            <router-link :to="{ name: 'fighters' }" class="font-normal cursor-pointer hover:text-contrast">Fighters</router-link>
+            <router-link :to="{ name: 'events' }" class="font-normal cursor-pointer hover:text-contrast">Events</router-link>
+        </div>
+        
         <v-spacer></v-spacer>
 
         <template v-if="isConnected">
@@ -15,7 +21,6 @@
             </template>
 
             <template v-else>
-                <p @click="router.push({ name: 'fighters' })" class="font-bold cursor-pointer">fighters</p>
                 <v-menu>
                     <template v-slot:activator="{ props }">
                         <v-btn

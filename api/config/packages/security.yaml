@@ -33,7 +33,8 @@ security:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
         - { path: ^/users, methods: Post, roles: PUBLIC_ACCESS }
-        - { path: ^/something, methods: Get, roles: PUBLIC_ACCESS }
+        - { path: ^/events, methods: Get, roles: PUBLIC_ACCESS }
+        - { path: ^/fighters, methods: Get, roles: PUBLIC_ACCESS }
         #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
             
     role_hierarchy:
