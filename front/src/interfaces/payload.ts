@@ -61,3 +61,10 @@ export interface FightBetI {
 	bet_on: string
 	bet_user: string
 }
+
+export interface SponsorshipI {
+	sponsor: string
+	sponsored: string
+	emailValidation: boolean
+	sponsorValidation: boolean
+}
