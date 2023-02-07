@@ -1,5 +1,7 @@
 <template>
-   <fighter-details />
+  <v-container>
+    <fighter-details />
+  </v-container>
 </template>
   
 <script lang="ts">

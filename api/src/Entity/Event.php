@@ -41,6 +41,9 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?int $capacity = null;
 
+    #[ORM\Column(nullable: false)]
+    private ?bool $VIP = false;
+
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?FightCategory $category = null;
@@ -163,6 +166,18 @@ class Event
         $this->category = $category;
 
         return $this;
+    }
+    
+    public function setVIP(?bool $vip): self
+    {
+        $this->vip = $vip;
+
+        return $this;
+    }
+
+    public function getVIP(): ?bool
+    {
+        return $this->category;
     }
 
     /**

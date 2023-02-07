@@ -36,5 +36,5 @@ export const useSponsorshipStore = defineStore('sponsorship', () => {
         }
     }
 
-    return { addSponsorship, getSponsorships, getSponsorship }
+    return { addSponsorship, getSponsorships, getSponsorship, sponsorships, sponsorship }
 });

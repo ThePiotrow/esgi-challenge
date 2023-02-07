@@ -2,12 +2,12 @@
   <v-container>
     <div class="flex grid grid-cols-4 gap-4">
       <div class="col-span-1">
-        <create-fighter class="flex justify-center"></create-fighter>
+        <create-fighter class="flex justify-start pb-2" />
         <fighter-filter @filterUpdated="filterFighter($event)" class="sticky top-[64px]" />
       </div>
-      <div v-if="fighters" class="col-span-3 grid grid-cols-4 gap-4" no-gutters>
+      <div v-if="fighters" class="col-span-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" no-gutters>
           <div v-for="fighter in fighters" :key="fighter.id">
-              <fighter :fighter="fighter"></fighter>
+              <fighter :fighter="fighter" />
           </div>
       </div>
     </div>

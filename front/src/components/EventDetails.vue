@@ -24,7 +24,7 @@ setup() {
         } catch (error) {
             
         }
-    })
+    });
 
     return { event }
 }

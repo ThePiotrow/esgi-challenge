@@ -12,7 +12,6 @@ import Deposit from "@/views/Deposit.vue"
 import Sponsorship from "@/views/admin/Sponsorship.vue"
 import FightersAdmin from "@/views/admin/Fighters.vue"
 import AdminView from "@/views/admin/AdminView.vue"
-import EventAdmin from "@/views/admin/Event.vue"
 
 import ProfileView from "@/views/Profile.vue";
 import Profile from "@/components/profile/Profile.vue";
@@ -38,7 +37,7 @@ export default [
             },
             {
                 path: 'events',
-                component: EventAdmin,
+                component: Event,
                 name: 'event-admin',
                 meta: { requiresAuth: true, requiresAdmin: true }
             },

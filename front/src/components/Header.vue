@@ -16,11 +16,8 @@
 
         <template v-if="isConnected">
             <v-btn @click="toggleAdmin" color="secondary" variant="flat">Toggle admin</v-btn>
-            <template v-if="isAdmin">
-                
-            </template>
 
-            <template v-else>
+
                 <v-menu>
                     <template v-slot:activator="{ props }">
                         <v-btn
@@ -34,7 +31,7 @@
 
                     <v-list>
                         <v-list-item
-                            v-for="item in userMenu" :key="item.value"
+                            v-for="item of listMenu" :key="item.value"
                             @click="router.push({ name: item.to })"
                             :value="item"
                             active-color="primary"
@@ -45,9 +42,15 @@
 
                             <v-list-item-title>{{ item.value }}</v-list-item-title>
                         </v-list-item>
+
+                        <v-list-item @click="logoutUser()">
+                            <template v-slot:prepend>
+                                <v-icon icon="mdi-logout"></v-icon>
+                            </template>
+                            <v-list-item-title>Logout</v-list-item-title>
+                        </v-list-item>
                     </v-list>
                 </v-menu>
-            </template>
         </template>
 
         <template v-else>
@@ -60,7 +63,7 @@
 </template>
 <script lang="ts">
 import { storeToRefs } from 'pinia';
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../stores/user';
 
@@ -70,7 +73,7 @@ export default defineComponent({
 
         const userStore = useUserStore();
         const { isConnected, isAdmin, user } = storeToRefs(userStore);
-        const { toggleAdmin } = userStore;
+        const { toggleAdmin, logout } = userStore;
 
         const userMenu = [
             {
@@ -83,9 +86,23 @@ export default defineComponent({
                 icon: 'mdi-piggy-bank',
                 to: 'wallet'
             }
+        ];
+
+        const adminMenu = [
+            {
+                value: 'Account',
+                icon: 'mdi-account',
+                to: 'user-info'
+            }
         ]
 
-        return { userMenu, router, isAdmin, isConnected, user, emit, toggleAdmin }
+        const listMenu = computed(() => isAdmin.value ? adminMenu : userMenu);
+
+        const logoutUser = () => {
+            logout();
+        }
+
+        return { userMenu, router, isAdmin, isConnected, user, emit, toggleAdmin, listMenu, logoutUser }
     }
 })
 

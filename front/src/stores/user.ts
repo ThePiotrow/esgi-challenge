@@ -24,6 +24,10 @@ export const useUserStore = defineStore('user', () => {
         return user.value?.roles.includes('ROLE_ADMIN');
     });
 
+    const isVIP = computed(() => {
+        return user.value?.roles.includes('ROLE_VIP') || user.value?.roles.includes('ROLE_VVIP') || user.value?.roles.includes('ROLE_ADMIN');
+    });
+
     const isConnected = computed(() => {
         return !!user.value?.email;
     });
@@ -102,5 +106,5 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout, getUsers, users, signinWithToken, changePassword, updateUser }
+    return { signin, signup, isAdmin, isConnected, user, toggleAdmin, logout, getUsers, users, signinWithToken, changePassword, updateUser, isVIP }
 });

@@ -1,23 +1,29 @@
 <template>
   <div class="flex flex-column gap-4">
     <div 
-      v-for="event of eventsMock" 
+      v-for="event of events" 
       :key="event.id" 
       @click="router.push({ name: 'event-details', params: { id: event.id }})"
       class="cursor-pointer"
       >
       <v-card class="grid grid-cols-5">
-        <div class="col-span-1 pa-5">{{ event.endTimestamp }}</div>
+        <div class="col-span-1 pa-5 text-center text-lg m-auto">{{ new Date(event.endTimestamp).toLocaleString('en-GB', { year: "numeric", month: "long", day: "2-digit" }) }}</div>
         <div class="col-span-1">
           <v-img :src="event.image" />
         </div>
-        <div class="col-span-3 pa-5 flex flex-column">
+        <div class="col-span-3 pa-5 flex flex-column relative">
+            <div v-if="admin" class="absolute right-[20px]">
+                <update-event />
+            </div>
           <p class="text-lg">{{ event.name }}</p>
           <p><span class="italic">{{ event.description }}</span> @{{ event.location }}</p>
-          <div class="mt-auto">
+          <div class="mt-auto flex">
             <div class="flex align-center gap-2">
               <v-icon icon="mdi-account-multiple"></v-icon>
               <p class="text-primary text-lg font-bold">{{ event.capacity }}</p>
+            </div>
+            <div v-if="event.VIP" class="ml-auto">
+                <span class="text-xl text-secondary">VIP event</span>
             </div>
           </div>
         </div>
@@ -26,29 +32,28 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref  } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useEventStore } from '../stores/event';
-import eventsMock from '../mocks/events.json';
+import { defineComponent, PropType, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
+import { EventI } from '@/interfaces/payload';
+import UpdateEvent from '@/components/dialogs/UpdateEvent.vue';
 
 export default defineComponent({
-  setup() {
-    const router = useRouter();
-
-    const eventStore = useEventStore();
-    const { getEvents } = eventStore;
-    const { events } = storeToRefs(eventStore);
-
-    onMounted(async () => {
-        try {
-            await getEvents();
-        } catch (error) {
-            
+    components: { UpdateEvent },
+    props: {
+        events: {
+            type: Array as PropType<EventI[]>,
+            default: () => []
+        },
+        admin: {
+            type: Boolean as PropType<boolean>,
+            default: false
         }
-    });
+    },
+    setup(props) {
+        const router = useRouter();
+        const { events, admin } = toRefs(props)
 
-    return { eventsMock, router }
-  }
+        return { router, events, admin }
+    }
 });
 </script>

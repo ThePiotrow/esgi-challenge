@@ -2,7 +2,7 @@
     <v-container>
         <div class="flex grid grid-cols-4 gap-4">
             <fighter-filter @filterUpdated="filter = $event" class="col-span-1 sticky top-[64px]" />
-            <div v-if="fighters" class="col-span-3 grid grid-cols-4 gap-4" no-gutters>
+            <div v-if="fighters" class="col-span-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" no-gutters>
                 <div v-for="fighter in fighterFiltered" :key="fighter.id">
                     <fighter :fighter="fighter"></fighter>
                 </div>

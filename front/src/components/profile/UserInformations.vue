@@ -1,5 +1,5 @@
 <template>
-    <div class="pa-10 w-50 border ma-auto">
+    <div class="pa-10 lg:w-1/2 border ma-auto">
         <h1 class="text-2xl font-bold pb-5">Personnal informations</h1>
 
         <v-form v-model="valid" ref="form">
