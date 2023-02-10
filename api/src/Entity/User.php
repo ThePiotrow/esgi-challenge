@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -28,28 +29,48 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-        new Post(processor: UserPasswordHasher::class),
-        new Put(processor: UserPasswordHasher::class),
-        new Patch(processor: UserPasswordHasher::class),
-        new Delete()
-    ]
+        new Get(
+            security: "is_granted('ROLE_USER')",
+            securityMessage: 'Sorry, but you are not the book owner.',
+        ),
+        new Put(
+            securityPostDenormalize: "is_granted('ROLE_ADMIN')",
+            securityPostDenormalizeMessage: 'Sorry, but you are not the actual book owner.',
+            processor: UserPasswordHasher::class
+        ),
+        new Post(
+            security: "is_granted('ROLE_ADMIN')",
+            securityMessage: 'Only admins can add books.',
+            processor: UserPasswordHasher::class
+        ),
+        new Patch(
+            uriTemplate: '/users/reset/password',
+            security: "is_granted('ROLE_ADMIN')",
+            securityMessage: 'Only admins can add books.',
+            name: 'reset-password',
+            processor: UserPasswordHasher::class
+        )
+    ],
+    security: "is_granted('ROLE_USER')"
 )]
-#[Post]
+##[Post(processor: UserPasswordHasher::class)]
+##[Put(processor: UserPasswordHasher::class)]
+##[Patch(processor: UserPasswordHasher::class)]
 #[Get]
-#[GetCollection]
-#[Patch]
-#[Patch(
-    uriTemplate: '/users/reset/password',
-    controller: ResetPasswordController::class,
-    name: 'reset-password'
+#[GetCollection(
 )]
+##[Patch]
+##[Patch(
+#    uriTemplate: '/users/reset/password',
+#    controller: ResetPasswordController::class,
+#    name: 'reset-password'
+#)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use EntityIdTrait;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['read:user:item'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -60,6 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[SerializedName('password')]
+    #[Groups(['read:admin:item'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
