@@ -1,9 +1,9 @@
 <template>
   <div @click="goToFighterDetails()" class="border rounded-md cursor-pointer">
-    <v-img 
-      :src="`https://picsum.photos/id/${Math.round(Math.random() * 300)}/200/150`" 
-      height="200" 
-      :contain="false" 
+    <v-img
+      :src="`https://picsum.photos/id/${Math.round(Math.random() * 300)}/200/150`"
+      height="200"
+      :contain="false"
       class="rounded-t-md"
     />
     <div class="pa-3">
@@ -16,12 +16,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, toRefs, PropType, computed  } from 'vue';
-import createFighter from '@/components/dialogs/createFighter.vue';
+import CreateFighter from '@/components/dialogs/CreateFighter.vue';
 import { FighterI } from '@/interfaces/payload';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  components: { createFighter },
+  components: { CreateFighter },
   props: {
     fighter: {
       type: Object as PropType<FighterI>,
