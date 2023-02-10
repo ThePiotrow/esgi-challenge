@@ -39,8 +39,9 @@ security:
             
     role_hierarchy:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
-        ROLE_ADMIN: ROLE_USER_VIP
-        ROLE_USER_VIP: ROLE_USER
+        ROLE_ADMIN: ROLE_VVIP
+        ROLE_VVIP: ROLE_VIP
+        ROLE_VIP: ROLE_USER
 
 when@test:
     security:
