@@ -74,6 +74,21 @@ services:
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data:rw
 
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
+    user: "node"
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    ports:
+      - ${VITE_PORT}:${VITE_PORT}
+    volumes:
+      - ./front:/usr/src/app
+
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
@@ -81,9 +96,9 @@ services:
 volumes:
   php_socket:
   caddy_data:
-  caddy_config:
-###> doctrine/doctrine-bundle ###
+  caddy_config: ###> doctrine/doctrine-bundle ###
+
   db_data:
-###< doctrine/doctrine-bundle ###
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+    ###< doctrine/doctrine-bundle ###
+    ###> symfony/mercure-bundle ###
+    ###< symfony/mercure-bundle ###
