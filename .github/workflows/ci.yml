@@ -25,12 +25,8 @@ env:
   CADDY_VERSION: 2
   APP_ENV: dev
   SYMFONY_PHPUNIT_VERSION: 9
-  # API Platform distribution
-  TRUSTED_PROXIES: 127.0.0.1
   TRUSTED_HOSTS: ^localhost$
-
   ###> symfony/framework-bundle ###
-  APP_ENV: dev
   APP_SECRET: !ChangeMe!
   ###< symfony/framework-bundle ###
 
@@ -56,12 +52,6 @@ env:
   # The secret used to sign the JWTs
   MERCURE_JWT_SECRET: "!ChangeMe!"
   ###< symfony/mercure-bundle ###
-
-  ###> lexik/jwt-authentication-bundle ###
-  JWT_SECRET_KEY: %kernel.project_dir%/config/jwt/private.pem
-  JWT_PUBLIC_KEY: %kernel.project_dir%/config/jwt/public.pem
-  JWT_PASSPHRASE: 870888198df3de87ae443407a73f5ad3
-  ###< lexik/jwt-authentication-bundle ###
 
   ###> symfony/mailer ###
   # MAILER_DSN: null://null
