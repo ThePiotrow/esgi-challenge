@@ -55,15 +55,16 @@ jobs:
           tags: your-docker-username/api-platform-backend:${{ env.APP_ENV }}
 
       - name: Deploy to VPS
-        uses: appleboy/scp-action@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ env.VPS_IP }}
           username: ${{ env.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          source: api-platform-backend
-          target: ~/api-platform-backend
-        env:
-          VPS_KEY: ${{ secrets.VPS_KEY }}
+          script: |
+            docker pull your-docker-username/api-platform-backend:${{ env.APP_ENV }}
+            docker stop api-platform-backend
+            docker rm api-platform-backend
+            docker run -d --name api-platform-backend -p 8080:80 api-platform-backend:${{ env.APP_ENV }}
 
       - name: SSH into VPS and deploy
         uses: appleboy/ssh-action@master
