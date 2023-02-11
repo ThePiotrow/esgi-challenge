@@ -41,10 +41,8 @@ jobs:
 
       - name: Install Frontend dependencies
         working-directory: front/
-        # Run and diplay .env file
         run: |
           npm install
-          cat .env
 
       - name: Build Frontend
         working-directory: front/
