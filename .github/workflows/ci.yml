@@ -42,6 +42,8 @@ jobs:
         run: |
           npm install
           npm run build
+        # package.json is in the 'front' directory
+        working-directory: front
 
       - name: Build Backend
         run: |
@@ -52,7 +54,7 @@ jobs:
         with:
           context: api
           push: true
-          tags: your-docker-username/api-platform-backend:${{ env.APP_ENV }}
+          tags: thepiotrow/api-platform-backend:${{ env.APP_ENV }}
 
       # - name: Deploy to VPS
       #   uses: appleboy/ssh-action@master
@@ -61,7 +63,7 @@ jobs:
       #     username: ${{ env.VPS_USER }}
       #     key: ${{ secrets.VPS_KEY }}
       #     script: |
-      #       docker pull your-docker-username/api-platform-backend:${{ env.APP_ENV }}
+      #       docker pull thepiotrow/api-platform-backend:${{ env.APP_ENV }}
       #       docker stop api-platform-backend
       #       docker rm api-platform-backend
       #       docker run -d --name api-platform-backend -p 8080:80 api-platform-backend:${{ env.APP_ENV }}
