@@ -16,6 +16,7 @@
 **/Thumbs.db
 .editorconfig
 .env.*.local
+.env
 .env.local
 .env.local.php
 .php_cs.cache
