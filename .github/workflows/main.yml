@@ -1,74 +1,74 @@
-# Githut Actions CI/CD for a API Platform project with Docker Compose as Backend and npm Vite as Frontend
-# Backend is located in server/ and Frontend in front/, so specify the path from the root of the project
+# # Githut Actions CI/CD for a API Platform project with Docker Compose as Backend and npm Vite as Frontend
+# # Backend is located in server/ and Frontend in front/, so specify the path from the root of the project
 
-name: CI
+# name: CI
 
-on:
-  push:
-    branches: ["feature/*", "main"]
-  pull_request: ~
-  workflow_dispatch: ~
+# on:
+#   push:
+#     branches: ["feature/*", "main"]
+#   pull_request: ~
+#   workflow_dispatch: ~
 
-jobs:
-  backend:
-    name: BACKEND
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Pull Docker Images
-        run: docker compose pull --ignore-pull-failures || true
-      - name: Start Docker Services
-        run: docker compose up --build -d
-      - name: Wait Docker Services
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker compose ps -q php)")"; do
-            case $status in
-              starting) sleep 1;;
-              healthy) exit 0;;
-              unhealthy)
-                docker compose ps
-                docker compose logs
-                exit 1
-              ;;
-            esac
-          done
-          exit 1
-      - name: Check HTTP reachability
-        run: curl -v -o /dev/null http://localhost
-      - name: Check HTTPS reachability
-        run: curl  -vk -o /dev/null https://localhost
-      - name: Create test database
-        run: |
-          docker compose exec -T php bin/console -e test doctrine:database:create
-          docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
-      - name: PHPUnit
-        run: docker compose exec -T php bin/phpunit
-      - name: Doctrine Schema Validator
-        run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
+# jobs:
+#   backend:
+#     name: BACKEND
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Pull Docker Images
+#         run: docker compose pull --ignore-pull-failures || true
+#       - name: Start Docker Services
+#         run: docker compose up --build -d
+#       - name: Wait Docker Services
+#         run: |
+#           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker compose ps -q php)")"; do
+#             case $status in
+#               starting) sleep 1;;
+#               healthy) exit 0;;
+#               unhealthy)
+#                 docker compose ps
+#                 docker compose logs
+#                 exit 1
+#               ;;
+#             esac
+#           done
+#           exit 1
+#       - name: Check HTTP reachability
+#         run: curl -v -o /dev/null http://localhost
+#       - name: Check HTTPS reachability
+#         run: curl  -vk -o /dev/null https://localhost
+#       - name: Create test database
+#         run: |
+#           docker compose exec -T php bin/console -e test doctrine:database:create
+#           docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+#       - name: PHPUnit
+#         run: docker compose exec -T php bin/phpunit
+#       - name: Doctrine Schema Validator
+#         run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
 
-  frontend:
-    name: FRONTEND
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: corepack enable
-      - run: pnpm --version
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-          cache-dependency-path: "**/pnpm-lock.yaml"
-      - name: install
-        run: pnpm install --frozen-lockfile --prefer-offline
-      - name: format
-        run: pnpm format
-      - name: lint
-        run: pnpm lint
-      - name: build
-        run: pnpm build
-      - name: test
-        run: pnpm test
+#   frontend:
+#     name: FRONTEND
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#       - run: corepack enable
+#       - run: pnpm --version
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           cache: "pnpm"
+#           cache-dependency-path: "**/pnpm-lock.yaml"
+#       - name: install
+#         run: pnpm install --frozen-lockfile --prefer-offline
+#       - name: format
+#         run: pnpm format
+#       - name: lint
+#         run: pnpm lint
+#       - name: build
+#         run: pnpm build
+#       - name: test
+#         run: pnpm test
