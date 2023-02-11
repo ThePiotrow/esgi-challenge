@@ -1,5 +1,5 @@
 # # Githut Actions CI/CD for a API Platform project with Docker Compose as Backend and npm Vite as Frontend
-# # Backend is located in server/ and Frontend in front/, so specify the path from the root of the project
+# # Backend is located in api/ and Frontend in front/, so specify the path from the root of the project
 
 # name: CI
 
