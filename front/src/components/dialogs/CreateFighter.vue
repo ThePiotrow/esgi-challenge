@@ -1,4 +1,4 @@
-template>
+<template>
 <div>
 <v-dialog
     v-model="dialog"
