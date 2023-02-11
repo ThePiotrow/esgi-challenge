@@ -66,13 +66,12 @@ jobs:
           VPS_KEY: ${{ secrets.VPS_KEY }}
 
       - name: SSH into VPS and deploy
-        uses: appleboy/ssh-action@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ env.VPS_IP }}
           username: ${{ env.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            docker load -i ~/api-platform-backend
-            docker-compose up -d
-        env:
-          VPS_KEY: ${{ secrets.VPS_KEY }}
+            docker stop api-platform-backend
+            docker rm api-platform-backend
+            docker run -d --name api-platform-backend -p 8080:80 api-platform-backend:prod
