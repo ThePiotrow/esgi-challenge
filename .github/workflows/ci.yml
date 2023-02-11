@@ -27,7 +27,7 @@ env:
   SYMFONY_PHPUNIT_VERSION: 9
   TRUSTED_HOSTS: ^localhost$
   ###> symfony/framework-bundle ###
-  APP_SECRET: !ChangeMe!
+  APP_SECRET: 0000
   ###< symfony/framework-bundle ###
 
   ###> doctrine/doctrine-bundle ###
