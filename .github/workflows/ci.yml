@@ -37,25 +37,25 @@ jobs:
 
       - name: Create Env file
         run: |
-          echo "VITE_BACKEND_URL=${env.VITE_BACKEND_URL}" >> ./front/.env \
-          echo "BASE_URL=${env.BASE_URL}" >> ./front/.env \
-          echo "TRUSTED_PROXIES=${env.TRUSTED_PROXIES}" >> ./api/.env \
-          echo "TRUSTED_HOSTS=${env.TRUSTED_HOSTS}" >> ./api/.env \
-          echo "APP_ENV=${env.APP_ENV}" >> ./api/.env \
-          echo "APP_SECRET=${env.APP_SECRET}" >> ./api/.env \
-          echo "DATABASE_URL=${env.DATABASE_URL}" >> ./api/.env \
-          echo "CORS_ALLOW_ORIGIN=${env.CORS_ALLOW_ORIGIN}" >> ./api/.env \
-          echo "MERCURE_URL=${env.MERCURE_URL}" >> ./api/.env \
-          echo "MERCURE_PUBLIC_URL=${env.MERCURE_PUBLIC_URL}" >> ./api/.env \
-          echo "MERCURE_JWT_SECRET=${env.MERCURE_JWT_SECRET}" >> ./api/.env \
-          echo "JWT_SECRET_KEY=${env.JWT_SECRET_KEY}" >> ./api/.env \
-          echo "JWT_PUBLIC_KEY=${env.JWT_PUBLIC_KEY}" >> ./api/.env \
-          echo "JWT_PASSPHRASE=${env.JWT_PASSPHRASE}" >> ./api/.env \
-          echo "MAILER_FROM=${env.MAILER_FROM}" >> ./api/.env \
-          echo "MAILER_PASSWORD=${env.MAILER_PASSWORD}" >> ./api/.env \
-          echo "MAILER_SERVER=${env.MAILER_SERVER}" >> ./api/.env \
-          echo "MAILER_PORT=${env.MAILER_PORT}" >> ./api/.env \
-          echo "MAILER_DSN=${env.MAILER_DSN}" >> ./api/.env
+          echo "VITE_BACKEND_URL=$VITE_BACKEND_URL" >> ./front/.env \
+          echo "BASE_URL=$BASE_URL" >> ./front/.env \
+          echo "TRUSTED_PROXIES=$TRUSTED_PROXIES" >> ./api/.env \
+          echo "TRUSTED_HOSTS=$TRUSTED_HOSTS" >> ./api/.env \
+          echo "APP_ENV=$APP_ENV" >> ./api/.env \
+          echo "APP_SECRET=$APP_SECRET" >> ./api/.env \
+          echo "DATABASE_URL=$DATABASE_URL" >> ./api/.env \
+          echo "CORS_ALLOW_ORIGIN=$CORS_ALLOW_ORIGIN" >> ./api/.env \
+          echo "MERCURE_URL=$MERCURE_URL" >> ./api/.env \
+          echo "MERCURE_PUBLIC_URL=$MERCURE_PUBLIC_URL" >> ./api/.env \
+          echo "MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET" >> ./api/.env \
+          echo "JWT_SECRET_KEY=$JWT_SECRET_KEY" >> ./api/.env \
+          echo "JWT_PUBLIC_KEY=$JWT_PUBLIC_KEY" >> ./api/.env \
+          echo "JWT_PASSPHRASE=$JWT_PASSPHRASE" >> ./api/.env \
+          echo "MAILER_FROM=$MAILER_FROM" >> ./api/.env \
+          echo "MAILER_PASSWORD=$MAILER_PASSWORD" >> ./api/.env \
+          echo "MAILER_SERVER=$MAILER_SERVER" >> ./api/.env \
+          echo "MAILER_PORT=$MAILER_PORT" >> ./api/.env \
+          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
