@@ -79,7 +79,7 @@ jobs:
 
         # -e VITE_PORT=${secrets.VITE_PORT} \
         # -e VITE_BACKEND_URL=${secrets.VITE_BACKEND_URL} \
-        # -e BASE_URL=${secrets.BASE_URL} \
+        # -e BASE_URL=${secrets.BASE_URL}  \
         # -e TRUSTED_PROXIES=${secrets.TRUSTED_PROXIES} \
         # -e TRUSTED_HOSTS=${secrets.TRUSTED_HOSTS} \
         # -e APP_ENV=${secrets.APP_ENV} \
