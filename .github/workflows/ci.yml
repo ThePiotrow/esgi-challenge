@@ -73,6 +73,7 @@ jobs:
           npm run build
 
       - name: Build Backend
+        working-directory: api/
         run: |
           docker-compose build --no-cache
 
