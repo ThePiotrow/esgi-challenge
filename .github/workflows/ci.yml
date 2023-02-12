@@ -72,7 +72,8 @@ jobs:
           -e MAILER_PASSWORD=azerty123 \
           -e MAILER_SERVER=ssl0.ovh.net \
           -e MAILER_PORT=465 \
-          -e MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT}
+          -e MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT} \
+          --no-cache
 
       - name: Start Backend
         run: |
