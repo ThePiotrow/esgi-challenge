@@ -37,8 +37,14 @@ jobs:
         
       - name: test
         run: |
-          cat .env \
-          cat ./api/.env \
+          cat .env 
+          
+      - name: test2
+        run: |
+          cat ./api/.env 
+      
+      - name: test2
+        run: |
           cat ./front/.env
 #      - name: Set up Node.js
 #        uses: actions/setup-node@v2
