@@ -18,12 +18,23 @@ services:
       retries: 3
       start_period: 30s
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-api-platform}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-api}?serverVersion=${POSTGRES_VERSION:-13}
-      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|caddy$$
-      MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
-      MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
-      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-api-platform}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-api}?serverVersion=${POSTGRES_VERSION:-13}
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      - TRUSTED_HOSTS=^${SERVER_NAME:-example\.com|localhost}|caddy$$
+      - MERCURE_URL=${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
+      - MERCURE_PUBLIC_URL=https://${SERVER_NAME:-localhost}/.well-known/mercure
+      - MERCURE_JWT_SECRET=${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      - APP_ENV=${APP_ENV:-dev}
+      - APP_SECRET=!ChangeMe!
+      - CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+      - JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+      - JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+      - JWT_PASSPHRASE=870888198df3de87ae443407a73f5ad3
+      - MAILER_FROM=esgi-challenge@webdealer.fr
+      - MAILER_PASSWORD=azerty123
+      - MAILER_SERVER=ssl0.ovh.net
+      - MAILER_PORT=465
+      - MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT}
 
   caddy:
     build:
@@ -74,10 +85,12 @@ services:
     user: "node"
     stdin_open: true
     tty: true
-    env_file:
-      - .env
+    environment:
+      - VITE_BACKEND_URL=${HOST_ADDRESS:-https://localhost}
+      - BASE_URL=${HOST_ADDRESS:-https://localhost}
+
     ports:
-      - ${VITE_PORT}:${VITE_PORT}
+      - 5173:5173
     volumes:
       - ./front:/usr/src/app
 

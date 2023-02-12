@@ -23,7 +23,7 @@ env:
   CADDY_MERCURE_JWT_SECRET: 0000
   PHP_VERSION: 8.1
   CADDY_VERSION: 2
-  APP_ENV: dev
+  APP_ENV: prod
   SYMFONY_PHPUNIT_VERSION: 9
 
 jobs:
@@ -52,4 +52,24 @@ jobs:
       - name: Build Backend
         working-directory: api/
         run: |
-          docker-compose build
+          docker-compose build \
+          -e VITE_PORT=5173 \
+          -e VITE_BACKEND_URL=https://localhost \
+          -e BASE_URL=https://localhost \
+          -e TRUSTED_PROXIES=127.0.0.1 \
+          -e TRUSTED_HOSTS=^localhost$ \
+          -e APP_ENV=dev \
+          -e APP_SECRET=!ChangeMe! \
+          -e DATABASE_URL="postgresql://api-platform:!ChangeMe!@127.0.0.1:5432/api?serverVersion=13&charset=utf8" \
+          -e CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$' \
+          -e MERCURE_URL=http://caddy/.well-known/mercure \
+          -e MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure \
+          -e MERCURE_JWT_SECRET="!ChangeMe!" \
+          -e JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem \
+          -e JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem \
+          -e JWT_PASSPHRASE=870888198df3de87ae443407a73f5ad3 \
+          -e MAILER_FROM=esgi-challenge@webdealer.fr \
+          -e MAILER_PASSWORD=azerty123 \
+          -e MAILER_SERVER=ssl0.ovh.net \
+          -e MAILER_PORT=465 \
+          -e MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT}
