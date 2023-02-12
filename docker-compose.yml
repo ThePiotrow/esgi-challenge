@@ -85,9 +85,8 @@ services:
     user: "node"
     stdin_open: true
     tty: true
-    environment:
-      - VITE_BACKEND_URL=${HOST_ADDRESS:-https://localhost}
-      - BASE_URL=${HOST_ADDRESS:-https://localhost}
+    env_file:
+      - ./front/.env
 
     ports:
       - 5173:5173
