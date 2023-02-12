@@ -5,27 +5,6 @@ on:
     branches:
       - main
 
-env:
-  VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
-  BASE_URL: ${{ secrets.BASE_URL }}
-  TRUSTED_PROXIES: ${{ secrets.TRUSTED_PROXIES }}
-  TRUSTED_HOSTS: ${{ secrets.TRUSTED_HOSTS }}
-  APP_ENV: ${{ secrets.APP_ENV }}
-  APP_SECRET: ${{ secrets.APP_SECRET }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  CORS_ALLOW_ORIGIN: ${{ secrets.CORS_ALLOW_ORIGIN }}
-  MERCURE_URL: ${{ secrets.MERCURE_URL }}
-  MERCURE_PUBLIC_URL: ${{ secrets.MERCURE_PUBLIC_URL }}
-  MERCURE_JWT_SECRET: ${{ secrets.MERCURE_JWT_SECRET }}
-  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-  JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
-  JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
-  MAILER_FROM: ${{ secrets.MAILER_FROM }}
-  MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
-  MAILER_SERVER: ${{ secrets.MAILER_SERVER }}
-  MAILER_PORT: ${{ secrets.MAILER_PORT }}
-  MAILER_DSN: "smtp://esgi-challenge@webdealer.fr:azerty123@ssl0.ovh.net:465"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,25 +15,25 @@ jobs:
 
       - name: Create Env file
         run: |
-          echo VITE_BACKEND_URL=${{VITE_BACKEND_URL}} >> ./front/.env \
-          echo BASE_URL=${{BASE_URL}} >> ./front/.env \
-          echo TRUSTED_PROXIES=${{TRUSTED_PROXIES}} >> ./api/.env \
-          echo TRUSTED_HOSTS=${{TRUSTED_HOSTS}} >> ./api/.env \
-          echo APP_ENV=${{APP_ENV}} >> ./api/.env \
-          echo APP_SECRET=${{APP_SECRET}} >> ./api/.env \
-          echo DATABASE_URL=${{DATABASE_URL}} >> ./api/.env \
-          echo CORS_ALLOW_ORIGIN=${{CORS_ALLOW_ORIGIN}} >> ./api/.env \
-          echo MERCURE_URL=${{MERCURE_URL}} >> ./api/.env \
-          echo MERCURE_PUBLIC_URL=${{MERCURE_PUBLIC_URL}} >> ./api/.env \
-          echo MERCURE_JWT_SECRET=${{MERCURE_JWT_SECRET}} >> ./api/.env \
-          echo JWT_SECRET_KEY=${{JWT_SECRET_KEY}} >> ./api/.env \
-          echo JWT_PUBLIC_KEY=${{JWT_PUBLIC_KEY}} >> ./api/.env \
-          echo JWT_PASSPHRASE=${{JWT_PASSPHRASE}} >> ./api/.env \
-          echo MAILER_FROM=${{MAILER_FROM}} >> ./api/.env \
-          echo MAILER_PASSWORD=${{MAILER_PASSWORD}} >> ./api/.env \
-          echo MAILER_SERVER=${{MAILER_SERVER}} >> ./api/.env \
-          echo MAILER_PORT=${{MAILER_PORT}} >> ./api/.env \
-          echo MAILER_DSN=${{MAILER_DSN}} >> ./api/.env
+          echo VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}} >> ./front/.env \
+          echo BASE_URL=${{secrets.BASE_URL}} >> ./front/.env \
+          echo TRUSTED_PROXIES=${{secrets.TRUSTED_PROXIES}} >> ./api/.env \
+          echo TRUSTED_HOSTS=${{secrets.TRUSTED_HOSTS}} >> ./api/.env \
+          echo APP_ENV=${{secrets.APP_ENV}} >> ./api/.env \
+          echo APP_SECRET=${{secrets.APP_SECRET}} >> ./api/.env \
+          echo DATABASE_URL=${{secrets.DATABASE_URL}} >> ./api/.env \
+          echo CORS_ALLOW_ORIGIN=${{secrets.CORS_ALLOW_ORIGIN}} >> ./api/.env \
+          echo MERCURE_URL=${{secrets.MERCURE_URL}} >> ./api/.env \
+          echo MERCURE_PUBLIC_URL=${{secrets.MERCURE_PUBLIC_URL}} >> ./api/.env \
+          echo MERCURE_JWT_SECRET=${{secrets.MERCURE_JWT_SECRET}} >> ./api/.env \
+          echo JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}} >> ./api/.env \
+          echo JWT_PUBLIC_KEY=${{secrets.JWT_PUBLIC_KEY}} >> ./api/.env \
+          echo JWT_PASSPHRASE=${{secrets.JWT_PASSPHRASE}} >> ./api/.env \
+          echo MAILER_FROM=${{secrets.MAILER_FROM}} >> ./api/.env \
+          echo MAILER_PASSWORD=${{secrets.MAILER_PASSWORD}} >> ./api/.env \
+          echo MAILER_SERVER=${{secrets.MAILER_SERVER}} >> ./api/.env \
+          echo MAILER_PORT=${{secrets.MAILER_PORT}} >> ./api/.env \
+          echo MAILER_DSN=${{secrets.MAILER_DSN}} >> ./api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
