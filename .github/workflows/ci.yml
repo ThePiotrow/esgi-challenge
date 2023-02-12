@@ -43,7 +43,7 @@ jobs:
           echo "TRUSTED_HOSTS=$TRUSTED_HOSTS" >> ./api/.env \
           echo "APP_ENV=$APP_ENV" >> ./api/.env \
           echo "APP_SECRET=$APP_SECRET" >> ./api/.env \
-          echo "DATABASE_URL=$DATABASE_URL" >> ./api/.env \
+          echo "DATABASE_URL='$DATABASE_URL'" >> ./api/.env \
           echo "CORS_ALLOW_ORIGIN=$CORS_ALLOW_ORIGIN" >> ./api/.env \
           echo "MERCURE_URL=$MERCURE_URL" >> ./api/.env \
           echo "MERCURE_PUBLIC_URL=$MERCURE_PUBLIC_URL" >> ./api/.env \
