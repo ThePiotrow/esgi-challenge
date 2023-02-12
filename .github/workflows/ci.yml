@@ -54,8 +54,7 @@ jobs:
           echo "MAILER_PASSWORD=$MAILER_PASSWORD" >> ./api/.env \
           echo "MAILER_SERVER=$MAILER_SERVER" >> ./api/.env \
           echo "MAILER_PORT=$MAILER_PORT" >> ./api/.env \
-          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env \
-          cat ${{ secrets.MAILER_DSN }}
+          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -70,7 +69,7 @@ jobs:
       - name: Build Frontend
         working-directory: front/
         run: |
-          npm run build
+          npm run build --pull --no-cache
 
       - name: Build Backend
         working-directory: api/
