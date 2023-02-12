@@ -37,7 +37,6 @@ jobs:
 
       - name: Create Env file
         run: |
-          echo "VITE_PORT=${env.VITE_PORT}" >> ./api/.env \
           echo "VITE_BACKEND_URL=${env.VITE_BACKEND_URL}" >> ./front/.env \
           echo "BASE_URL=${env.BASE_URL}" >> ./front/.env \
           echo "TRUSTED_PROXIES=${env.TRUSTED_PROXIES}" >> ./api/.env \
