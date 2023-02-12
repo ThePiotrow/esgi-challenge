@@ -6,7 +6,7 @@ services:
       context: ./api
       target: api_platform_php
     env_file:
-      - .api/.env
+      - ./api/.env
     depends_on:
       - database
     restart: unless-stopped
