@@ -53,23 +53,41 @@ jobs:
         working-directory: api/
         run: |
           docker-compose build \
-          -e VITE_PORT=5173 \
-          -e VITE_BACKEND_URL=https://localhost \
-          -e BASE_URL=https://localhost \
-          -e TRUSTED_PROXIES=127.0.0.1 \
-          -e TRUSTED_HOSTS=^localhost$ \
-          -e APP_ENV=dev \
-          -e APP_SECRET=!ChangeMe! \
-          -e DATABASE_URL="postgresql://api-platform:!ChangeMe!@127.0.0.1:5432/api?serverVersion=13&charset=utf8" \
-          -e CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$' \
-          -e MERCURE_URL=http://caddy/.well-known/mercure \
-          -e MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure \
-          -e MERCURE_JWT_SECRET="!ChangeMe!" \
-          -e JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem \
-          -e JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem \
-          -e JWT_PASSPHRASE=870888198df3de87ae443407a73f5ad3 \
-          -e MAILER_FROM=esgi-challenge@webdealer.fr \
-          -e MAILER_PASSWORD=azerty123 \
-          -e MAILER_SERVER=ssl0.ovh.net \
-          -e MAILER_PORT=465 \
-          -e MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT}
+          -e VITE_PORT=${vars.VITE_PORT} \
+          -e VITE_BACKEND_URL=${vars.VITE_BACKEND_URL} \
+          -e BASE_URL=${vars.BASE_URL} \
+          -e TRUSTED_PROXIES=${vars.TRUSTED_PROXIES} \
+          -e TRUSTED_HOSTS=${vars.TRUSTED_HOSTS} \
+          -e APP_ENV=${vars.APP_ENV} \
+          -e APP_SECRET=${vars.APP_SECRET} \
+          -e DATABASE_URL=${vars.DATABASE_URL} \
+          -e CORS_ALLOW_ORIGIN=${vars.CORS_ALLOW_ORIGIN} \
+          -e MERCURE_URL=${vars.MERCURE_URL} \
+          -e MERCURE_PUBLIC_URL=${vars.MERCURE_PUBLIC_URL} \
+          -e MERCURE_JWT_SECRET=${vars.MERCURE_JWT_SECRET} \
+          -e JWT_SECRET_KEY=${vars.JWT_SECRET_KEY} \
+          -e JWT_PUBLIC_KEY=${vars.JWT_PUBLIC_KEY} \
+          -e JWT_PASSPHRASE=${vars.JWT_PASSPHRASE} \
+          -e MAILER_FROM=${vars.MAILER_FROM} \
+          -e MAILER_PASSWORD=${vars.MAILER_PASSWORD} \
+          -e MAILER_SERVER=${vars.MAILER_SERVER} \
+          -e MAILER_PORT=${vars.MAILER_PORT} \
+          -e MAILER_DSN=${vars.MAILER_DSN}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: api
+          push: true
+          tags: thepiotrow/api-platform-backend:${{ env.APP_ENV }}
+
+      - name: Deploy to OVH VPS
+        uses: ovh/actions/server-deploy@main
+        with:
+          access_key: ${{ secrets.OVH_ACCESS_KEY }}
+          secret_key: ${{ secrets.OVH_SECRET_KEY }}
+          endpoint: ovh-eu
+          server_name: my-vps
+          command: |
+            scp api/docker-compose.yml my-vps:/root/api-platform
+            ssh my-vps "cd ~/api-platform && docker-compose up -d"
