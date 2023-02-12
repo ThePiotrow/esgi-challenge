@@ -15,8 +15,8 @@ jobs:
 
       - name: Create Env file
         run: |
-          ./api/.env.ci > ./api/.env
-          ./api/.env.ci > ./front/.env
+          envsubst < ./api/.env.ci > ./api/.env
+          envsubst < ./api/.env.ci > ./front/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
