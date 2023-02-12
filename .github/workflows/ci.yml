@@ -55,14 +55,12 @@ jobs:
           echo "MAILER_PASSWORD=$MAILER_PASSWORD" >> ./api/.env \
           echo "MAILER_SERVER=$MAILER_SERVER" >> ./api/.env \
           echo "MAILER_PORT=$MAILER_PORT" >> ./api/.env \
-          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env \
-          cat ./api/.env \
-          cat ./front/.env
+          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 16
 
       - name: Install Frontend dependencies
         working-directory: front/
