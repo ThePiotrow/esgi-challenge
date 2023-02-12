@@ -24,7 +24,7 @@ env:
   MAILER_PASSWORD: ${{ secrets.MAILER_PASSWORD }}
   MAILER_SERVER: ${{ secrets.MAILER_SERVER }}
   MAILER_PORT: ${{ secrets.MAILER_PORT }}
-  MAILER_DSN: ${{ secrets.MAILER_DSN }}
+  MAILER_DSN: "smtp://esgi-challenge@webdealer.fr:azerty123@ssl0.ovh.net:465"
 
 jobs:
   build:
