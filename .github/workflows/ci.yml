@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-  VITE_PORT: ${{ secrets.VITE_PORT }}
   VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
   BASE_URL: ${{ secrets.BASE_URL }}
   TRUSTED_PROXIES: ${{ secrets.TRUSTED_PROXIES }}
