@@ -53,8 +53,7 @@ jobs:
           echo "MAILER_FROM=$MAILER_FROM" >> ./api/.env \
           echo "MAILER_PASSWORD=$MAILER_PASSWORD" >> ./api/.env \
           echo "MAILER_SERVER=$MAILER_SERVER" >> ./api/.env \
-          echo "MAILER_PORT=$MAILER_PORT" >> ./api/.env \
-          echo "MAILER_DSN=$MAILER_DSN" >> ./api/.env
+          echo "MAILER_PORT=$MAILER_PORT" >> ./api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
