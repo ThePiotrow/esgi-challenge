@@ -53,7 +53,7 @@ jobs:
         working-directory: api/
         run: |
           docker-compose build --no-cache \
-          -e VITE_PORT=${{secrets.VITE_PORT}} \
+          -e VITE_PORT=5173 \
           -e VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}} \
           -e BASE_URL=${{secrets.BASE_URL}}  \
           -e TRUSTED_PROXIES=${{secrets.TRUSTED_PROXIES}} \
