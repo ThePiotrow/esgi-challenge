@@ -81,13 +81,13 @@ jobs:
           push: true
           tags: thepiotrow/api-platform-backend:${{ env.APP_ENV }}
 
-      - name: Deploy to OVH VPS
-        uses: ovh/actions/server-deploy@main
-        with:
-          access_key: ${{ secrets.OVH_ACCESS_KEY }}
-          secret_key: ${{ secrets.OVH_SECRET_KEY }}
-          endpoint: ovh-eu
-          server_name: my-vps
-          command: |
-            scp api/docker-compose.yml my-vps:/root/api-platform
-            ssh my-vps "cd ~/api-platform && docker-compose up -d"
+      # - name: Deploy to OVH VPS
+      #   uses: ovh/actions/server-deploy@main
+      #   with:
+      #     access_key: ${{ secrets.OVH_ACCESS_KEY }}
+      #     secret_key: ${{ secrets.OVH_SECRET_KEY }}
+      #     endpoint: ovh-eu
+      #     server_name: my-vps
+      #     command: |
+      #       scp api/docker-compose.yml my-vps:/root/api-platform
+      #       ssh my-vps "cd ~/api-platform && docker-compose up -d"
