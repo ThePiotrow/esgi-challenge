@@ -34,26 +34,31 @@ jobs:
           echo "MAILER_SERVER=${{secrets.MAILER_SERVER}}" >> ./api/.env \
           echo "MAILER_PORT=${{secrets.MAILER_PORT}}" >> ./api/.env \
           echo "MAILER_DSN=${{secrets.MAILER_DSN}}" >> ./api/.env
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: Install Frontend dependencies
-        working-directory: front/
+        
+      - name: test
         run: |
-          npm install
-
-      - name: Build Frontend
-        working-directory: front/
-        run: |
-          npm run build --pull --no-cache
-
-      - name: Build Backend
-        working-directory: api/
-        run: |
-          docker-compose build --no-cache
+          cat .env \
+          cat ./api/.env \
+          cat ./front/.env
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: 16
+#
+#      - name: Install Frontend dependencies
+#        working-directory: front/
+#        run: |
+#          npm install
+#
+#      - name: Build Frontend
+#        working-directory: front/
+#        run: |
+#          npm run build --pull --no-cache
+#
+#      - name: Build Backend
+#        working-directory: api/
+#        run: |
+#          docker-compose build --no-cache
 
         # -e VITE_PORT=${secrets.VITE_PORT} \
         # -e VITE_BACKEND_URL=${secrets.VITE_BACKEND_URL} \
@@ -76,16 +81,16 @@ jobs:
         # -e MAILER_PORT=${secrets.MAILER_PORT} \
         # -e MAILER_DSN=${secrets.MAILER_DSN}
 
-      - name: Start Backend
-        run: |
-          docker-compose up -d
-
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          context: api
-          push: true
-          tags: thepiotrow/api-platform-backend:latest
+#      - name: Start Backend
+#        run: |
+#          docker-compose up -d
+#
+#      - name: Push to Docker Hub
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: api
+#          push: true
+#          tags: thepiotrow/api-platform-backend:latest
 
       # - name: Deploy to OVH VPS
       #   uses: ovh/actions/server-deploy@main
