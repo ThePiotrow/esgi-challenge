@@ -37,7 +37,7 @@ services:
 
   caddy:
     build:
-      context: api/
+      context: ./api
       target: api_platform_caddy
     depends_on:
       - php
