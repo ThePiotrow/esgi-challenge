@@ -15,26 +15,26 @@ jobs:
 
       - name: Create Env file
         run: |
-          echo VITE_PORT=5173 >> .env \
-          echo VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}} >> ./front/.env \
-          echo BASE_URL=${{secrets.BASE_URL}} >> ./front/.env \
-          echo TRUSTED_PROXIES=${{secrets.TRUSTED_PROXIES}} >> ./api/.env \
-          echo TRUSTED_HOSTS=${{secrets.TRUSTED_HOSTS}} >> ./api/.env \
-          echo APP_ENV=${{secrets.APP_ENV}} >> ./api/.env \
-          echo APP_SECRET=${{secrets.APP_SECRET}} >> ./api/.env \
-          echo DATABASE_URL=${{secrets.DATABASE_URL}} >> ./api/.env \
-          echo CORS_ALLOW_ORIGIN=${{secrets.CORS_ALLOW_ORIGIN}} >> ./api/.env \
-          echo MERCURE_URL=${{secrets.MERCURE_URL}} >> ./api/.env \
-          echo MERCURE_PUBLIC_URL=${{secrets.MERCURE_PUBLIC_URL}} >> ./api/.env \
-          echo MERCURE_JWT_SECRET=${{secrets.MERCURE_JWT_SECRET}} >> ./api/.env \
-          echo JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}} >> ./api/.env \
-          echo JWT_PUBLIC_KEY=${{secrets.JWT_PUBLIC_KEY}} >> ./api/.env \
-          echo JWT_PASSPHRASE=${{secrets.JWT_PASSPHRASE}} >> ./api/.env \
-          echo MAILER_FROM=${{secrets.MAILER_FROM}} >> ./api/.env \
-          echo MAILER_PASSWORD=${{secrets.MAILER_PASSWORD}} >> ./api/.env \
-          echo MAILER_SERVER=${{secrets.MAILER_SERVER}} >> ./api/.env \
-          echo MAILER_PORT=${{secrets.MAILER_PORT}} >> ./api/.env \
-          echo MAILER_DSN=${{secrets.MAILER_DSN}} >> ./api/.env
+          echo "VITE_PORT=5173" >> .env \
+          echo "VITE_BACKEND_URL=${secrets.VITE_BACKEND_URL}" >> ./front/.env \
+          echo "BASE_URL=${secrets.BASE_URL}" >> ./front/.env \
+          echo "TRUSTED_PROXIES=${secrets.TRUSTED_PROXIES}" >> ./api/.env \
+          echo "TRUSTED_HOSTS=${secrets.TRUSTED_HOSTS}" >> ./api/.env \
+          echo "APP_ENV=${secrets.APP_ENV}" >> ./api/.env \
+          echo "APP_SECRET=${secrets.APP_SECRET}" >> ./api/.env \
+          echo "DATABASE_URL=${secrets.DATABASE_URL}" >> ./api/.env \
+          echo "CORS_ALLOW_ORIGIN=${secrets.CORS_ALLOW_ORIGIN}" >> ./api/.env \
+          echo "MERCURE_URL=${secrets.MERCURE_URL}" >> ./api/.env \
+          echo "MERCURE_PUBLIC_URL=${secrets.MERCURE_PUBLIC_URL}" >> ./api/.env \
+          echo "MERCURE_JWT_SECRET=${secrets.MERCURE_JWT_SECRET}" >> ./api/.env \
+          echo "JWT_SECRET_KEY=${secrets.JWT_SECRET_KEY}" >> ./api/.env \
+          echo "JWT_PUBLIC_KEY=${secrets.JWT_PUBLIC_KEY}" >> ./api/.env \
+          echo "JWT_PASSPHRASE=${secrets.JWT_PASSPHRASE}" >> ./api/.env \
+          echo "MAILER_FROM=${secrets.MAILER_FROM}" >> ./api/.env \
+          echo "MAILER_PASSWORD=${secrets.MAILER_PASSWORD}" >> ./api/.env \
+          echo "MAILER_SERVER=${secrets.MAILER_SERVER}" >> ./api/.env \
+          echo "MAILER_PORT=${secrets.MAILER_PORT}" >> ./api/.env \
+          echo "MAILER_DSN=${secrets.MAILER_DSN}" >> ./api/.env
           
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -54,7 +54,7 @@ jobs:
       - name: Build Backend
         working-directory: api/
         run: |
-          docker-compose build
+          docker-compose build --no-cache
 
         # -e VITE_PORT=${secrets.VITE_PORT} \
         # -e VITE_BACKEND_URL=${secrets.VITE_BACKEND_URL} \
