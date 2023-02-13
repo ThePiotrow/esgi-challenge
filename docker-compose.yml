@@ -29,10 +29,10 @@ services:
       - JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
       - JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
       - JWT_PASSPHRASE=870888198df3de87ae443407a73f5ad3
-      - MAILER_FROM=esgi-challenge@webdealer.fr
-      - MAILER_PASSWORD=azerty123
-      - MAILER_SERVER=ssl0.ovh.net
-      - MAILER_PORT=465
+      - MAILER_FROM=${MAILER_FROM:-noreply@localhost}
+      - MAILER_PASSWORD=${MAILER_PASSWORD:-!ChangeMe!}
+      - MAILER_SERVER=${MAILER_SERVER:-smtp.gmail.com}
+      - MAILER_PORT=${MAILER_PORT:-587}
       - MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT}
 
   caddy:
