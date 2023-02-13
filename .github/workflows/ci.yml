@@ -54,25 +54,25 @@ jobs:
         run: |
           docker-compose build \
           -e VITE_PORT=5173 \
-          -e VITE_BACKEND_URL=https://localhost \
-          -e BASE_URL=https://localhost \
-          -e TRUSTED_PROXIES=127.0.0.1 \
-          -e TRUSTED_HOSTS=^localhost$ \
-          -e APP_ENV=dev \
-          -e APP_SECRET=!ChangeMe! \
-          -e DATABASE_URL="***127.0.0.1:5432/api?serverVersion=13&charset=utf8" \
-          -e CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$' \
-          -e MERCURE_URL=http://caddy/.well-known/mercure \
-          -e MERCURE_PUBLIC_URL=https://localhost/.well-known/mercure \
-          -e MERCURE_JWT_SECRET="!ChangeMe!" \
-          -e JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem \
-          -e JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem \
-          -e JWT_PASSPHRASE=870888198df3de87ae443407a73f5ad3 \
-          -e MAILER_FROM=esgi-challenge@webdealer.fr \
-          -e MAILER_PASSWORD=azerty123 \
-          -e MAILER_SERVER=ssl0.ovh.net \
-          -e MAILER_PORT=465 \
-          -e MAILER_DSN=smtp://${MAILER_FROM}:${MAILER_PASSWORD}@${MAILER_SERVER}:${MAILER_PORT} \
+          -e APP_ENV=${{secrets.APP_ENV}} \
+          -e APP_SECRET=${{secrets.APP_SECRET}} \
+          -e BASE_URL=${{secrets.BASE_URL}} \
+          -e CORS_ALLOW_ORIGIN=${{secrets.CORS_ALLOW_ORIGIN}} \
+          -e DATABASE_URL=${{secrets.DATABASE_URL}} \
+          -e JWT_PASSPHRASE=${{secrets.JWT_PASSPHRASE}}\
+          -e JWT_PUBLIC_KEY=${{secrets.JWT_PUBLIC_KEY}}\
+          -e JWT_SECRET_KEY=${{secrets.JWT_SECRET_KEY}}\
+          -e MAILER_DSN=${{secrets.MAILER_DSN}}\
+          -e MAILER_FROM=${{secrets.MAILER_FROM}}\
+          -e MAILER_PASSWORD=${{secrets.MAILER_PASSWORD}}\
+          -e MAILER_PORT=${{secrets.MAILER_PORT}}\
+          -e MAILER_SERVER=${{secrets.MAILER_SERVER}}\
+          -e MERCURE_JWT_SECRET=${{secrets.MERCURE_JWT_SECRET}}\
+          -e MERCURE_PUBLIC_URL=${{secrets.MERCURE_PUBLIC_URL}}\
+          -e MERCURE_URL=${{secrets.MERCURE_URL}}\
+          -e TRUSTED_HOSTS=${{secrets.TRUSTED_HOSTS}}\
+          -e TRUSTED_PROXIES=${{secrets.TRUSTED_PROXIES}}\
+          -e VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}}\
           --no-cache
 
       - name: Start Backend
