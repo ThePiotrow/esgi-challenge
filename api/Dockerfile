@@ -131,7 +131,6 @@ FROM caddy:${CADDY_VERSION} AS api_platform_caddy
 
 WORKDIR /srv/api
 
-#copy .env file
 COPY .env ./
 
 COPY --from=api_platform_caddy_builder /usr/bin/caddy /usr/bin/caddy

@@ -10,7 +10,7 @@ git pull
 docker-compose down
 
 # Build the image with the new changes
-docker-compose build
+docker-compose build --no-cache
 
 # Start the new containers
 docker-compose up -d
