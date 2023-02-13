@@ -1,4 +1,13 @@
 echo "Deploying changes..."
+pwd
+pwd
+pwd
+pwd
+pwd
+pwd
+pwd
+pwd
+cd ~/ci/
 # Pull changes from the live branch
 git pull
 
